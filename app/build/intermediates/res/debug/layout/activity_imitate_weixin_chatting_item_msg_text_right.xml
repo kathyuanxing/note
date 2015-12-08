@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="6dp" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_sendtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#bfbfbf"
+            android:padding="2dp"
+            android:textColor="#ffffff"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp" >
+
+        <ImageView
+            android:id="@+id/iv_userhead"
+            android:layout_width="@dimen/size_avatar"
+            android:layout_height="@dimen/size_avatar"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="@dimen/margin_chat_activity"
+            android:src="@drawable/myhead"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/tv_chatcontent"
+            style="@style/chat_content_date_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/margin_chat_activity"
+            android:layout_toLeftOf="@id/iv_userhead"
+            android:autoLink="web"
+            android:background="@drawable/chatto_bg"
+            android:gravity="left|center"
+            android:lineSpacingExtra="2dp"
+            android:maxWidth="225.0dip"
+            android:paddingLeft="8dip"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/iv_userhead"
+            android:layout_toRightOf="@id/tv_chatcontent"
+            android:gravity="center"
+            android:textColor="#818181"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+</LinearLayout>  <!-- From: file:/E:/b506项目学习资料/TestAndroid/app/src/main/res/layout/activity_imitate_weixin_chatting_item_msg_text_right.xml -->

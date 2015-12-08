@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="E:\b506项目学习资料\TestAndroid\app\src\main\java\libs\android-async-http-1.4.3.jar"
+        jumboMode="false"
+        revision="23.0.0 rc3"
+        sha1="f70e680861fdf9449819003e7799a4e9aca047f8">
+        <dex dex="E:\b506项目学习资料\TestAndroid\app\build\intermediates\pre-dexed\debug\android-async-http-1.4.3-02290c25821e7ce82115f597a4daf4db0afd10c5.jar" />
+    </item>
+    <item
+        jar="C:\Users\kathy\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-v4\18.0.0\support-v4-18.0.0.jar"
+        jumboMode="false"
+        revision="23.0.0 rc3"
+        sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
+        <dex dex="E:\b506项目学习资料\TestAndroid\app\build\intermediates\pre-dexed\debug\support-v4-18.0.0-ad7a5e7144e4236ff916795856bdb5ddd57cfee7.jar" />
+    </item>
+
+</items>
