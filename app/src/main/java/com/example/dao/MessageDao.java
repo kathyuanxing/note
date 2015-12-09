@@ -10,10 +10,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 
 public class MessageDao {
     private MDatabaseHelper dbHelper;
-
     public MessageDao(Context context) {
         dbHelper = MDatabaseHelper.getInstance(context);
     }
@@ -30,8 +31,10 @@ public class MessageDao {
         // get writable database
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         // insert
+        Log.d("test",values.toString());
         long rowID = db.insert(MDatabaseConstants.TABLE_MESSAGE, null, values);
-        if (rowID == -1)
+
+        if (rowID == -1)//插入不成功返回-1
             return false;
         else {
             return true;

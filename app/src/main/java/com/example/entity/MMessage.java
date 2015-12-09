@@ -187,4 +187,22 @@ public class MMessage {
     public void setSendPosition(String sendPosition) {
         this.sendPosition = sendPosition;
     }
+
+    @Override
+    public String toString() {
+        return "MMessage{" +
+                "ID='" + ID + '\'' +
+                ", senderID='" + senderID + '\'' +
+                ", senderName='" + senderName + '\'' +
+                ", receiverID='" + receiverID + '\'' +
+                ", receiverName='" + receiverName + '\'' +
+                ", messageText='" + messageText + '\'' +
+                ", filePath='" + filePath + '\'' +
+                ", fileSize=" + fileSize +
+                ", fileDuration=" + fileDuration +
+                ", type=" + type +
+                ", time='" + time + '\'' +
+                ", sendPosition='" + sendPosition + '\'' +
+                '}';
+    }
 }

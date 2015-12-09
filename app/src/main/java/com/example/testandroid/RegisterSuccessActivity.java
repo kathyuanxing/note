@@ -1,7 +1,9 @@
 package com.example.testandroid;
 import android.app.Activity;
+import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -26,11 +28,12 @@ import java.util.List;
 
 public class RegisterSuccessActivity extends Activity implements OnClickListener {
 	private Location currentLocation;
-	private String talkerName, talkerID;
+	private String talkerName="aaron", talkerID="aaron";
 	private Button mBtnSend;
 	private EditText mEditTextContent;
 	private ListView mListView;
 	private ChatMsgViewAdapter mAdapter;
+	private Context context;
 	private List<ChatMsgEntity> mDataArrays=new ArrayList<ChatMsgEntity>();
 	private final static int COUNT=1;
 	 @Override
@@ -39,8 +42,10 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 		 //预先设置允许改变的窗口状态，需在 setContentView 之前调用，否则设置标题时抛运行时错误。
 		 requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		 setContentView(R.layout.login_success);
+		 context=this;
 		 getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 		 initView();
+		 ThreadManager.getInstance().startGetMessageThread(context);
 	    }
 	public void initView(){
 		mListView= (ListView) findViewById(R.id.listview);
@@ -55,13 +60,13 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 			ChatMsgEntity entity =new ChatMsgEntity();
 			entity.setDate("2015-12-2 18:00:00");
 			if(i%2==0){
-				entity.setName("熊爸爸");
+				entity.setName("小熊");
 				entity.setMsgType(true);// 收到的消息
 			} else {
 				entity.setName("兔子");
 				entity.setMsgType(false);// 自己发送的消息
 			}
-			entity.setMessage("你是我的麻麻？");
+			entity.setMessage("你好");
 			mDataArrays.add(entity);
 		}
 		mAdapter = new ChatMsgViewAdapter(this, mDataArrays);
@@ -97,11 +102,11 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 		return format.format(new Date());
 	}
 	private void writeMessage(int messageType, String text, int fileDuration) {
-
-		String userID = MSharedPreference.get(this, MSharedPreference.USER_ID,
-				"");
-		String userName = MSharedPreference.get(this,
-				MSharedPreference.USER_NAME, "");
+		//手动填写发送人信息
+//		String userID="kathy";
+//		String userName="kathy";
+		String userID = MSharedPreference.get(this, MSharedPreference.USER_ID, "");
+		String userName = MSharedPreference.get(this, MSharedPreference.USER_NAME, "");
 		// int talkerID = Integer.parseInt(this.talkerID);
 		String time = MMicroUtil.getCurrentTimeStamp();
 		String id = MMicroUtil.getCurrentTimeMillis();
@@ -122,6 +127,7 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 			// 添加文本消息
 			message = new MMessage(id, userID, userName, talkerID, talkerName,
 					text, null, 0L, 0, messageType, time, sendPosition);
+			Log.d("message",message.toString());
 		} else {
 			Long fileSize = MFileUtil.getFileSize(text);
 			// 添加文件消息
@@ -141,7 +147,7 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 	 * 将消息发送给服务器
 	 *
 	 * @param message
-	 *            要发送的消息
+	 * 要发送的消息
 	 */
 	private void sendMMessage(MMessage message) {
 		// 开启发送消息的线程

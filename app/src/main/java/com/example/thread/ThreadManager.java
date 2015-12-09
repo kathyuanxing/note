@@ -62,7 +62,7 @@ public class ThreadManager {
     /**
      * 开启消息写入线程
      *
-     * @param message
+     * @param messages
      * @param isSend
      * @param context
      */
@@ -88,7 +88,6 @@ public class ThreadManager {
      * 开启消息发送线程
      *
      * @param message
-     * @param context
      */
     public void startSendMessageThread(MMessage message) {
         if (sendMessageThread == null) {

@@ -198,7 +198,7 @@ public class MDataOperation {
             } else {
                 // 通知UI线程刷新
                 MessageHandlerManager.getInstance().sendMessage(
-                        Constants.WRITE_MESSAGE, "MessageActivity");
+                        Constants.WRITE_MESSAGE, "RegisterSuccessActivity");
             }
         }
     }

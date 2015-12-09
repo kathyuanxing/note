@@ -2,6 +2,7 @@ package com.example.testandroid;
 
 import android.content.Context;
 import android.text.BoringLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class ChatMsgViewAdapter extends BaseAdapter {
         return coll.get(positon);
     }
     public View getView(int position,View convertView,ViewGroup parent){
+        Log.d("position",position+"");
         ChatMsgEntity entity=coll.get(position);
         boolean isComMsg=entity.getMsgType();
         ViewHolder viewHolder=null;

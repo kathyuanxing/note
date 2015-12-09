@@ -12,7 +12,7 @@ public class Constants
     // 用户名
     public static String USER_NAME;
     // 服务器数据请求的URl基址
-    public  String SERVER_BASE_URL ="http://172.16.134.5:8080/";
+    public  String SERVER_BASE_URL ="http://172.16.134.14:8080/";
     //public static String SERVER_BASE_URL = "http://techserver.oicp.net:9988/";
     // public static String SERVER_BASE_URL = "http://192.168.1.100:8020/";
     public  String CONTACT_URL ="http://172.16.134.5:8080"+"/department.xml";

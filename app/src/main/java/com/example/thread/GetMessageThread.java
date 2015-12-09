@@ -63,7 +63,7 @@ public class GetMessageThread extends Thread {
                 // 获取用户ID
                 String userID = MSharedPreference.get(context,
                         MSharedPreference.USER_ID, "");
-                String mGetMessageJson = "{\"userID\":\"hezheng" + userID + "\"}";
+                String mGetMessageJson = "{\"userID\":\"" + userID + "\"}";
                 // post请求参数
                 keys = new ArrayList<String>();
                 values = new ArrayList<String>();
@@ -72,9 +72,7 @@ public class GetMessageThread extends Thread {
                 values.add(mGetMessageJson);
                 System.out.println("GETMESSAGE------"+mGetMessageJson);
                 //System.out.println("GetMessageThread:    "+values.get(0));
-                AsyncHttp.post(constants.SERVER_BASE_URL
-                                + Constants.GET_MESSAGE, keys, values,
-                        "GetMessageThread");
+                AsyncHttp.post(constants.SERVER_BASE_URL + Constants.GET_MESSAGE, keys, values,"GetMessageThread");
             }
         }
     }

@@ -55,7 +55,7 @@ public class WriteMessageThread extends Thread {
                 messageList.remove(0);
                 // 通知UI线程刷新
                 MessageHandlerManager.getInstance().sendMessage(
-                        Constants.WRITE_MESSAGE, "MessageActivity");
+                        Constants.WRITE_MESSAGE, "RegisterSuccessActivity");
                 if (!isSend)
                     // 通知栏显示新消息通知
                     MNotification.showMessageNotification(

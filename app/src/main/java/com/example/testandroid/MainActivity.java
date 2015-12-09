@@ -6,6 +6,9 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 
 import com.example.util.HttpUtil;
+import com.example.util.MSharedPreference;
+
+import android.content.Context;
 import android.content.SharedPreferences.Editor;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.content.SharedPreferences;
@@ -122,6 +125,14 @@ public class MainActivity extends Activity {
                         editor.putString("password",ps_copy);
                         editor.commit();
                     }
+                    //  保存配置信息
+                    HashMap Mdata=new HashMap();
+                    Mdata=(HashMap)msg.obj;
+                    String Mun=(String) Mdata.get("userName");
+                    String Mps=(String)Mdata.get("passWord");
+                    Context context=MainActivity.this;
+                    MSharedPreference.save(context,MSharedPreference.USER_ID, Mun);
+                    MSharedPreference.save(context, MSharedPreference.USER_NAME, Mun);
                     Intent nextIntent = new Intent(MainActivity.this, RegisterSuccessActivity.class);
                     startActivity(nextIntent);
                     // 结束该Activity
