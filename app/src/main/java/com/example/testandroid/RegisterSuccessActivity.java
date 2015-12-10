@@ -34,8 +34,8 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 	private ListView mListView;
 	private ChatMsgViewAdapter mAdapter;
 	private Context context;
-	private List<ChatMsgEntity> mDataArrays=new ArrayList<ChatMsgEntity>();
-	private final static int COUNT=1;
+	private int currentCount = 0; // 当前显示的条目数
+	private List<ChatMsgEntity> entityList=new ArrayList<ChatMsgEntity>();
 	 @Override
 	    protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
@@ -56,20 +56,29 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 		mListView.setSelection(mAdapter.getCount() - 1);
 	}
 	public void initData(){
-		for(int i=0;i<COUNT;i++){
-			ChatMsgEntity entity =new ChatMsgEntity();
-			entity.setDate("2015-12-2 18:00:00");
-			if(i%2==0){
-				entity.setName("小熊");
-				entity.setMsgType(true);// 收到的消息
-			} else {
-				entity.setName("兔子");
-				entity.setMsgType(false);// 自己发送的消息
+		String userID = MSharedPreference.get(this, MSharedPreference.USER_ID, "");
+		ArrayList<MMessage> messageList = MDataOperation.readReverseMessages(
+				currentCount, Constants.DATA_STORE_DATABASE, userID, talkerID,
+				this);
+		for (MMessage j : messageList) {
+			//遍历MMessage
+			boolean flagType;
+			ChatMsgEntity eachEntity =new ChatMsgEntity();
+			eachEntity.setName(j.getSenderName());
+			if(j.getSenderName().equals(userID)){
+				flagType=false;
+			}else {
+				flagType=true;
 			}
-			entity.setMessage("你好");
-			mDataArrays.add(entity);
+			eachEntity.setDate(j.getTime());
+			eachEntity.setMessage(j.getMessageText());
+			eachEntity.setMsgType(flagType);
+			entityList.add(eachEntity);
+			Log.d("messagelist",j.toString());
 		}
-		mAdapter = new ChatMsgViewAdapter(this, mDataArrays);
+		Log.d("messageList",entityList.toString());
+
+		mAdapter = new ChatMsgViewAdapter(this, entityList);
 		mListView.setAdapter(mAdapter);
 	}
 	@Override
@@ -91,7 +100,8 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 			entity.setMessage(contString);
 			entity.setMsgType(false);
 
-			mDataArrays.add(entity);
+			entityList.add(entity);
+//			mDataArrays.add(entity);
 			mAdapter.notifyDataSetChanged();// 通知ListView，数据已发生改变
 			mEditTextContent.setText("");// 清空编辑框数据
 			mListView.setSelection(mListView.getCount() - 1);// 发送一条消息时，ListView显示选择最后一项

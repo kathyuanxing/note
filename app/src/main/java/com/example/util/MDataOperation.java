@@ -4,6 +4,7 @@ package com.example.util;
  * Created by kathy on 2015/12/8.
  */
 import java.util.ArrayList;
+import java.util.Collections;
 
 import android.content.Context;
 
@@ -173,7 +174,34 @@ public class MDataOperation {
         }
         return messages;
     }
+    /**
+     * 从指定条目数起读取本地消息
+     *
+     * 倒序输出
+     *
+     * @param start
+     *            读数据起始位置
+     * @param dataStore
+     *            数据存储方式
+     * @param userID
+     *            当前用户ID
+     * @param talkerID
+     *            对话者ID
+     * @param context
+     *            上下文
+     * @return
+     */
+    public static ArrayList<MMessage> readReverseMessages(int start, int dataStore,
+                                                   String userID, String talkerID, Context context) {
+        ArrayList<MMessage> messages = null;
+        if (dataStore == Constants.DATA_STORE_CACHE) {
 
+        } else if (dataStore == Constants.DATA_STORE_DATABASE) {
+            messages = MMessage.getMessages(start, userID, talkerID, context);
+        }
+        Collections.reverse(messages);
+        return messages;
+    }
     /**
      * 将消息列表存入本地
      *

@@ -39,6 +39,7 @@ public class ChatMsgViewAdapter extends BaseAdapter {
         return coll.get(positon);
     }
     public View getView(int position,View convertView,ViewGroup parent){
+        //position从上至下升序排列
         Log.d("position",position+"");
         ChatMsgEntity entity=coll.get(position);
         boolean isComMsg=entity.getMsgType();

@@ -8,6 +8,15 @@ public class ChatMsgEntity {
     private String date;//消息日期
     private String message;//消息内容
     private boolean isComMeg=true;//是否收到消息
+    @Override
+    public String toString() {
+        return "ChatMsgEntity{" +
+                "name='" + name + '\'' +
+                ", date='" + date + '\'' +
+                ", message='" + message + '\'' +
+                ", isComMeg=" + isComMeg +
+                '}';
+    }
     public String getDate() {
         return date;
     }
