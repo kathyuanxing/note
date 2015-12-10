@@ -3,11 +3,11 @@ package com.example.util;
 /**
  * Created by kathy on 2015/12/8.
  */
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
 
 import com.example.testandroid.R;
 import com.example.testandroid.RegisterSuccessActivity;
@@ -72,14 +72,22 @@ public class MNotification {
         // 点击通知栏后进入相应界面
         NotificationManager mNotificationManager = (NotificationManager) context
                 .getSystemService(android.content.Context.NOTIFICATION_SERVICE);
-        Notification mNotification = new Notification(drawable, text,
-                System.currentTimeMillis());
-        mNotification.defaults = Notification.DEFAULT_ALL;
-        mNotification.flags |= Notification.FLAG_AUTO_CANCEL;
+//        Notification mNotification = new Notification(drawable, text,
+//                System.currentTimeMillis());
         PendingIntent mPendingIntent = PendingIntent.getActivity(context, 0,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mNotification.setLatestEventInfo(context, text, text, mPendingIntent);
-        mNotificationManager.notify(id, mNotification);
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(context)
+                        .setAutoCancel(true)
+                        .setContentIntent(mPendingIntent)
+                        .setSmallIcon(drawable)
+                        .setWhen(System.currentTimeMillis())
+                        .setContentTitle(text)
+                        .setContentText(text);
+//        mNotification.defaults = Notification.DEFAULT_ALL;
+//        mNotification.flags |= Notification.FLAG_AUTO_CANCEL;
+//        mNotification.setLatestEventInfo(context, text, text, mPendingIntent);
+        mNotificationManager.notify(id, builder.build());
     }
 
     /**

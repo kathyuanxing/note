@@ -95,13 +95,12 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 			// 将消息写入数据库
 			writeMessage(MDatabaseConstants.MESSAGE_TYPE_TEXT, contString, 0);
 			ChatMsgEntity entity = new ChatMsgEntity();
-			entity.setName("兔子");
+			entity.setName("kathy");
 			entity.setDate(getDate());
 			entity.setMessage(contString);
 			entity.setMsgType(false);
 
 			entityList.add(entity);
-//			mDataArrays.add(entity);
 			mAdapter.notifyDataSetChanged();// 通知ListView，数据已发生改变
 			mEditTextContent.setText("");// 清空编辑框数据
 			mListView.setSelection(mListView.getCount() - 1);// 发送一条消息时，ListView显示选择最后一项

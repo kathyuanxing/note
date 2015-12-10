@@ -58,10 +58,10 @@ public class SendMessageThread extends Thread {
                 mMessageJson.append("\"senderName\":\""
                         + message.getSenderName() + "\",");
                 System.out.println("senderName-----"+message.getSenderName());
-                mMessageJson.append("\"receiverID\":\"aaron"
+                mMessageJson.append("\"receiverID\":\"kathy"
                         + "\",");
                 System.out.println("receiverID-----");
-                mMessageJson.append("\"receiverName\":\"aaron"
+                mMessageJson.append("\"receiverName\":\"kathy"
                         + "\",");
                 System.out.println("receiverName-----"+message.getReceiverName());
                 // 根据不同的消息类型添加不同的内容

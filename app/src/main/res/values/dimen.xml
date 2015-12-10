@@ -2,4 +2,5 @@
 <resources>
     <dimen name="margin_chat_activity">5dp</dimen>
     <dimen name="size_avatar">50dp</dimen>
+    <dimen name="height_top_bar">48dp</dimen>
 </resources>

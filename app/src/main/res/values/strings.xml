@@ -17,6 +17,15 @@
     <string name="weather_drizzle">&#xf01c;</string>
     <string name="place_not_found">Sorry, no weather data found.</string>
     <string name="text_ack_msg">已读</string>
+    <string name="button_send">发送</string>
+    <string name="attach_take_pic">拍照</string>
+    <string name="attach_picture">图片</string>
+    <string name="attach_location">位置</string>
+    <string name="attach_file">文件</string>
+    <string name="attach_voice_call">语音电话</string>
+    <string name="attach_video">视频</string>
+    <string name="button_pushtotalk">按住说话</string>
+    <string name="move_up_to_cancel">手指上滑，取消发送</string>
     <string name="text_delivered_msg">送达</string>
     <string name="custom_title_left">聊天笔记</string>
 
