@@ -1,7 +1,6 @@
-package com.example.testandroid;
+package com.example.adapter;
 
 import android.content.Context;
-import android.text.BoringLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.entity.ChatMsgEntity;
+import com.example.testandroid.R;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
 public class ChatMsgViewAdapter extends BaseAdapter {
     private List<ChatMsgEntity> coll;//消息对象数组
     private LayoutInflater mInflater;
-    public ChatMsgViewAdapter(Context context,List<ChatMsgEntity> coll){
+    public ChatMsgViewAdapter(Context context, List<ChatMsgEntity> coll){
         this.coll=coll;
         mInflater=LayoutInflater.from(context);
     }

@@ -9,6 +9,32 @@ package com.example.testandroid;
 
 public final class R {
     public static final class attr {
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int emojiconSize=0x7f010000;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int emojiconTextLength=0x7f010002;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int emojiconTextStart=0x7f010001;
     }
     public static final class color {
         public static final int btn_gray_normal=0x7f060000;
@@ -223,4 +249,67 @@ public final class R {
         public static final int chat_text_date_style=0x7f050003;
         public static final int chat_text_name_style=0x7f050004;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a Emojicon.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #Emojicon_emojiconSize com.example.testandroid:emojiconSize}</code></td><td></td></tr>
+           <tr><td><code>{@link #Emojicon_emojiconTextLength com.example.testandroid:emojiconTextLength}</code></td><td></td></tr>
+           <tr><td><code>{@link #Emojicon_emojiconTextStart com.example.testandroid:emojiconTextStart}</code></td><td></td></tr>
+           </table>
+           @see #Emojicon_emojiconSize
+           @see #Emojicon_emojiconTextLength
+           @see #Emojicon_emojiconTextStart
+         */
+        public static final int[] Emojicon = {
+            0x7f010000, 0x7f010001, 0x7f010002
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.example.testandroid.R.attr#emojiconSize}
+          attribute's value can be found in the {@link #Emojicon} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.testandroid:emojiconSize
+        */
+        public static final int Emojicon_emojiconSize = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.example.testandroid.R.attr#emojiconTextLength}
+          attribute's value can be found in the {@link #Emojicon} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.testandroid:emojiconTextLength
+        */
+        public static final int Emojicon_emojiconTextLength = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.example.testandroid.R.attr#emojiconTextStart}
+          attribute's value can be found in the {@link #Emojicon} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.example.testandroid:emojiconTextStart
+        */
+        public static final int Emojicon_emojiconTextStart = 1;
+    };
 }

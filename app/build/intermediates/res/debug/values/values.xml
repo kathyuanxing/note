@@ -4,6 +4,7 @@
     <eat-comment/>
     <color name="btn_gray_normal">#c0c0c0</color>
     <color name="common_top_bar_blue">#22292c</color>
+    <declare-styleable name="Emojicon"><attr format="dimension" name="emojiconSize"/><attr format="integer" name="emojiconTextStart"/><attr format="integer" name="emojiconTextLength"/></declare-styleable>
     <!-- From: file:/E:/b506项目学习资料/TestAndroid/app/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>

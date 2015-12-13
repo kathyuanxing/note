@@ -1,13 +1,14 @@
-package com.example.testandroid;
+package com.example.adapter;
 
 /**
  * Created by kathy on 2015/12/13.
  */
-import java.util.List;
 
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+
+import java.util.List;
 
 public class ExpressionPagerAdapter extends PagerAdapter {
 

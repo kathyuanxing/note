@@ -1,7 +1,9 @@
 package com.example.testandroid;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
@@ -19,6 +21,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.example.adapter.ChatMsgViewAdapter;
+import com.example.adapter.ExpressionAdapter;
+import com.example.adapter.ExpressionPagerAdapter;
 import com.example.dao.MDatabaseConstants;
 import com.example.entity.ChatMsgEntity;
 import com.example.entity.Constants;
@@ -55,6 +60,8 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 	private View buttonSetModeKeyboard;
 	private Context context;
 	private LinearLayout btnContainer;
+	public static final int REQUEST_CODE_CAMERA = 18;
+	public static final int REQUEST_CODE_LOCAL = 19;
 	private int currentCount = 0; // 当前显示的条目数
 	private List<ChatMsgEntity> entityList=new ArrayList<ChatMsgEntity>();
 	 @Override
@@ -79,6 +86,7 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 		iv_emoticons_normal = (ImageView) findViewById(R.id.iv_emoticons_normal);
 		iv_emoticons_checked = (ImageView) findViewById(R.id.iv_emoticons_checked);
 		emojiIconContainer = (LinearLayout) findViewById(R.id.ll_face_container);
+		btnContainer = (LinearLayout) findViewById(R.id.ll_btn_container);
 		expressionViewpager = (ViewPager) findViewById(R.id.vPager);
 		buttonSetModeKeyboard = findViewById(R.id.btn_set_mode_keyboard);
 		initData();
@@ -165,6 +173,18 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 				emojiIconContainer.setVisibility(View.GONE);
 				more.setVisibility(View.GONE);
 				break;
+			case R.id.btn_take_picture:
+				// 点击照相图标
+				//selectPicFromCamera();
+				break;
+			case R.id.btn_picture:
+				// 点击图片图标
+				selectPicFromLocal();
+				break;
+				// 点击位置图标
+			case R.id.btn_location:
+//				startActivityForResult(new Intent(this, BaiduMapActivity.class), REQUEST_CODE_MAP);
+				break;
 		}
 	}
 	public void editClick(View v) {
@@ -174,6 +194,31 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 			iv_emoticons_normal.setVisibility(View.VISIBLE);
 			iv_emoticons_checked.setVisibility(View.INVISIBLE);
 		}
+	}
+	/**
+	 * 显示或隐藏图标按钮页
+	 *
+	 * @param view
+	 */
+	public void more(View view) {
+		if (more.getVisibility() == View.GONE) {
+			System.out.println("more gone");
+			hideKeyboard();
+			more.setVisibility(View.VISIBLE);
+			btnContainer.setVisibility(View.VISIBLE);
+			emojiIconContainer.setVisibility(View.GONE);
+		} else {
+			if (emojiIconContainer.getVisibility() == View.VISIBLE) {
+				emojiIconContainer.setVisibility(View.GONE);
+				btnContainer.setVisibility(View.VISIBLE);
+				iv_emoticons_normal.setVisibility(View.VISIBLE);
+				iv_emoticons_checked.setVisibility(View.INVISIBLE);
+			} else {
+				more.setVisibility(View.GONE);
+			}
+
+		}
+
 	}
 	private void send(){
 		String contString = mEditTextContent.getText().toString();
@@ -347,4 +392,21 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 		});
 		return view;
 	}
+	/**
+	 * 从图库获取图片
+	 */
+	public void selectPicFromLocal() {
+		Intent intent;
+		if (Build.VERSION.SDK_INT < 19) {
+			intent = new Intent(Intent.ACTION_GET_CONTENT);
+			intent.setType("image/*");
+
+		} else {
+			intent = new Intent(
+					Intent.ACTION_PICK,
+					android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		}
+		startActivityForResult(intent, REQUEST_CODE_LOCAL);
+	}
+
 }

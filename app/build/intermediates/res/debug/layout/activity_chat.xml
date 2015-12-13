@@ -171,6 +171,7 @@
                     android:layout_gravity="center_vertical|right"
                     android:layout_margin="1dip"
                     android:scaleType="fitCenter"
+                    android:onClick="onClick"
                     android:src="@drawable/icon_chat_emoji_normal"
                     android:visibility="visible" />
 
@@ -183,6 +184,7 @@
                     android:layout_gravity="center_vertical|right"
                     android:layout_margin="1dip"
                     android:scaleType="fitCenter"
+                    android:onClick="onClick"
                     android:src="@drawable/icon_chat_emoji_checked"
                     android:visibility="invisible" />
             </RelativeLayout>
