@@ -3,21 +3,32 @@
     <!-- From: file:/E:/b506项目学习资料/TestAndroid/app/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="btn_gray_normal">#c0c0c0</color>
+    <color name="common_top_bar_blue">#22292c</color>
     <!-- From: file:/E:/b506项目学习资料/TestAndroid/app/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <!-- From: file:/E:/b506项目学习资料/TestAndroid/app/src/main/res/values/dimen.xml -->
     <eat-comment/>
+    <dimen name="height_top_bar">48dp</dimen>
     <dimen name="margin_chat_activity">5dp</dimen>
     <dimen name="size_avatar">50dp</dimen>
     <!-- From: file:/E:/b506项目学习资料/TestAndroid/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="action_settings">Settings</string>
     <string name="app_name">笔记</string>
+    <string name="attach_file">文件</string>
+    <string name="attach_location">位置</string>
+    <string name="attach_picture">图片</string>
+    <string name="attach_take_pic">拍照</string>
+    <string name="attach_video">视频</string>
+    <string name="attach_voice_call">语音电话</string>
+    <string name="button_pushtotalk">按住说话</string>
+    <string name="button_send">发送</string>
     <string name="change_city">Change city</string>
     <string name="custom_title_left">聊天笔记</string>
     <string name="hello_world">Hello world!</string>
+    <string name="move_up_to_cancel">手指上滑，取消发送</string>
     <string name="open_weather_maps_app_id">11111</string>
     <string name="place_not_found">Sorry, no weather data found.</string>
     <string name="text_ack_msg">已读</string>
