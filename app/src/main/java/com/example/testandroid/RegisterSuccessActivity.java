@@ -24,16 +24,17 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.dao.MDatabaseConstants;
 import com.example.adapter.ChatMsgViewAdapter;
 import com.example.adapter.ExpressionAdapter;
 import com.example.adapter.ExpressionPagerAdapter;
-import com.example.dao.MDatabaseConstants;
 import com.example.entity.ChatMsgEntity;
 import com.example.entity.Constants;
 import com.example.entity.MMessage;
 import com.example.thread.ThreadManager;
 import com.example.util.MDataOperation;
 import com.example.util.MFileUtil;
+import com.example.util.MImageUtil;
 import com.example.util.MMicroUtil;
 import com.example.util.MSharedPreference;
 import com.example.widget.ExpandGridView;
@@ -50,6 +51,7 @@ import java.util.List;
 
 public class RegisterSuccessActivity extends Activity implements OnClickListener {
 	private Location currentLocation;
+	private LinearLayout attachmentRelativeLayout;// 添加附件的布局
 	private String talkerName="aaron", talkerID="aaron";
 	private Button mBtnSend;
 	private EditText mEditTextContent;
@@ -63,11 +65,12 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 	private ImageView iv_emoticons_checked;
 	private ChatMsgViewAdapter mAdapter;
 	private Button btnMore;
-	private static final String FILE_PATH = "/sdcard/";
+	public String imageUri = "";
+	public String videoUri = "";
+	public String currentPhotoPath = "";
 	private View buttonSetModeKeyboard;
 	private Context context;
 	private LinearLayout btnContainer;
-	private static final int REQUEST_CODE_IMAGE = 1;
 	public static final int REQUEST_CODE_CAMERA = 18;
 	public static final int REQUEST_CODE_LOCAL = 19;
 	public static final int REQUEST_CODE_SELECT_VIDEO = 23;
@@ -86,6 +89,7 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 		 ThreadManager.getInstance().startGetMessageThread(context);
 	    }
 	public void initView(){
+		attachmentRelativeLayout = (LinearLayout) findViewById(R.id.ll_btn_container);
 		mListView= (ListView) findViewById(R.id.listview);
 		mBtnSend= (Button) findViewById(R.id.btn_send);
 		btnMore = (Button) findViewById(R.id.btn_more);
@@ -147,6 +151,8 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 			}else {
 				flagType=true;
 			}
+			eachEntity.setPath(j.getFilePath());
+			eachEntity.setType(j.getType());
 			eachEntity.setDate(j.getTime());
 			eachEntity.setMessage(j.getMessageText());
 			eachEntity.setMsgType(flagType);
@@ -241,6 +247,7 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 			entity.setName("kathy");
 			entity.setDate(getDate());
 			entity.setMessage(contString);
+			entity.setType(MDatabaseConstants.MESSAGE_TYPE_TEXT);
 			entity.setMsgType(false);
 
 			entityList.add(entity);
@@ -427,22 +434,72 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 		        	 // 指定开启系统相机的Action
 		             intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
 		             intent.addCategory(Intent.CATEGORY_DEFAULT);
+		imageUri = MFileUtil.getMediaUri(Constants.ATTACHMENT_TYPE_IMAGE);
 		           	// 根据文件地址创建文件
-		            File file=new File(FILE_PATH + System.currentTimeMillis() + ".jpg");
+		            File file=new File(imageUri);
 		            // 把文件地址转换成Uri格式
 		            Uri uri=Uri.fromFile(file);
 		         	// 设置系统相机拍摄照片完成后图片文件的存放地址
 		            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+					currentPhotoPath = file.getAbsolutePath();
 		startActivityForResult(intent, REQUEST_CODE_CAMERA);
 	}
 	public void selectVideoFromCamera(){
 		Intent intent = new Intent();
 		             intent.setAction("android.media.action.VIDEO_CAPTURE");
-		             intent.addCategory("android.intent.category.DEFAULT");
-		             File file = new File(FILE_PATH+System.currentTimeMillis()+".mp4");
+		intent.addCategory("android.intent.category.DEFAULT");
+		videoUri = MFileUtil.getMediaUri(Constants.ATTACHMENT_TYPE_VIDEO);
+		             File file = new File(videoUri);
 		           	 Uri uri = Uri.fromFile(file);
 		             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 		             startActivityForResult(intent, REQUEST_CODE_SELECT_VIDEO);
+	}
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		// 媒体文件路径
+		String tempUri;
+		String mediaUri;
+		if (requestCode == REQUEST_CODE_CAMERA
+				&& resultCode == Activity.RESULT_OK) {
+			Log.v("ANDROIDDEBUG", currentPhotoPath);
+			// 隐藏添加附件的布局
+			attachmentRelativeLayout.setVisibility(View.GONE);
+			// 获取附件路径
+//			mediaUri = data.getExtras().getString("uri");
+			ChatMsgEntity entity = new ChatMsgEntity();
+			entity.setName("kathy");
+			entity.setDate(getDate());
+			entity.setPath(currentPhotoPath);
+			entity.setType(MDatabaseConstants.MESSAGE_TYPE_IMAGE);
+			entity.setMsgType(false);
+			/*将所得照片压缩，并将原图删除*/
+			// 缩略图路径
+			tempUri = MFileUtil.getMediaUri(Constants.ATTACHMENT_TYPE_IMAGE);
+			// 生成缩略图
+			MImageUtil.getThumbnail(currentPhotoPath, tempUri);
+			// 删除原图
+			MFileUtil.deleteFile(currentPhotoPath);
+			currentPhotoPath=tempUri;
+			// 将消息写入数据库
+			writeMessage(MDatabaseConstants.MESSAGE_TYPE_IMAGE, currentPhotoPath, 0);
+			entityList.add(entity);
+			mAdapter.notifyDataSetChanged();// 通知ListView，数据已发生改变
+			mListView.setSelection(mListView.getCount() - 1);// 发送一条消息时，ListView显示选择最后一项
+		} else if (requestCode == REQUEST_CODE_SELECT_VIDEO
+				&& resultCode == Activity.RESULT_OK) {
+			// 附件时长
+			int duration = data.getExtras().getInt("Duration");
+			if (duration > 30) {
+				Toast.makeText(this, "视频文件过大！", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			// 获取附件路径
+			mediaUri = data.getExtras().getString("uri");
+			// 将消息写入数据库
+			writeMessage(MDatabaseConstants.MESSAGE_TYPE_VIDEO, mediaUri,
+					duration);
+		}
 	}
 
 }

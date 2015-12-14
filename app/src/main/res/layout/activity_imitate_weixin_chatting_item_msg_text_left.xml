@@ -51,6 +51,7 @@
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@id/tv_chatcontent"
             android:layout_below="@id/iv_userhead"/>
+
     </RelativeLayout>
 
 </LinearLayout>

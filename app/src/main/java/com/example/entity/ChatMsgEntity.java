@@ -7,6 +7,8 @@ public class ChatMsgEntity {
     private String name;//消息来自
     private String date;//消息日期
     private String message;//消息内容
+    private String path;//消息路径
+    private int type;//消息类型
     private boolean isComMeg=true;//是否收到消息
     @Override
     public String toString() {
@@ -16,6 +18,21 @@ public class ChatMsgEntity {
                 ", message='" + message + '\'' +
                 ", isComMeg=" + isComMeg +
                 '}';
+    }
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
     public String getDate() {
         return date;
@@ -49,12 +66,5 @@ public class ChatMsgEntity {
         this.isComMeg = isComMeg;
     }
     public ChatMsgEntity(){
-    }
-    public ChatMsgEntity(String name,String date,String text,boolean isComMeg){
-        super();
-        this.name=name;
-        this.date=date;
-        this.message=text;
-        this.isComMeg=isComMeg;
     }
 }

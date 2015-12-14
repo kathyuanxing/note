@@ -8,7 +8,7 @@ public class Constants
 {
 //    ScreenNetwork network = new ScreenNetwork();
     // 应用的名称
-    public static final String APP_NAME = "IMSDroid";
+    public static final String APP_NAME = "testandroid";
     // 用户名
     public static String USER_NAME;
     // 服务器数据请求的URl基址

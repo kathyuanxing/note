@@ -12,7 +12,6 @@
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/msg_state_fail_resend_pressed.png" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/msg_state_failed_resend.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/timestampe_bg.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi/SmileUtils.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ac0.png" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ac1.png" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi/chat_file_normal.png" charset="GBK" />
@@ -52,7 +51,6 @@
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi/record_animate_14.png" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi/recording_hint_bg.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable-mdpi/top_bar_back.xml" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/SmileUtils.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ee_1.png" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ee_10.png" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ee_11.png" charset="GBK" />
@@ -91,6 +89,8 @@
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_chat.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/expression_gridview.xml" charset="GBK" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/row_expression.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/row_received_picture.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/row_sent_picture.xml" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

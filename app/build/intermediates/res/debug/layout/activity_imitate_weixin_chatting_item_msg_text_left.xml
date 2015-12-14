@@ -51,6 +51,7 @@
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@id/tv_chatcontent"
             android:layout_below="@id/iv_userhead"/>
+
     </RelativeLayout>
 
 </LinearLayout><!-- From: file:/E:/b506项目学习资料/TestAndroid/app/src/main/res/layout/activity_imitate_weixin_chatting_item_msg_text_left.xml -->
