@@ -3,8 +3,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -20,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.adapter.ChatMsgViewAdapter;
 import com.example.adapter.ExpressionAdapter;
@@ -36,11 +39,14 @@ import com.example.util.MSharedPreference;
 import com.example.widget.ExpandGridView;
 import com.example.util.SmileUtils;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+
 
 public class RegisterSuccessActivity extends Activity implements OnClickListener {
 	private Location currentLocation;
@@ -57,11 +63,14 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 	private ImageView iv_emoticons_checked;
 	private ChatMsgViewAdapter mAdapter;
 	private Button btnMore;
+	private static final String FILE_PATH = "/sdcard/";
 	private View buttonSetModeKeyboard;
 	private Context context;
 	private LinearLayout btnContainer;
+	private static final int REQUEST_CODE_IMAGE = 1;
 	public static final int REQUEST_CODE_CAMERA = 18;
 	public static final int REQUEST_CODE_LOCAL = 19;
+	public static final int REQUEST_CODE_SELECT_VIDEO = 23;
 	private int currentCount = 0; // 当前显示的条目数
 	private List<ChatMsgEntity> entityList=new ArrayList<ChatMsgEntity>();
 	 @Override
@@ -175,7 +184,7 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 				break;
 			case R.id.btn_take_picture:
 				// 点击照相图标
-				//selectPicFromCamera();
+				selectPicFromCamera();// 点击照相图标
 				break;
 			case R.id.btn_picture:
 				// 点击图片图标
@@ -185,6 +194,9 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 			case R.id.btn_location:
 //				startActivityForResult(new Intent(this, BaiduMapActivity.class), REQUEST_CODE_MAP);
 				break;
+			case R.id.btn_video:
+				// 点击摄像图标
+				selectVideoFromCamera();
 		}
 	}
 	public void editClick(View v) {
@@ -348,8 +360,7 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 						if (filename != "delete_expression") { // 不是删除键，显示表情
 							// 这里用的反射，所以混淆的时候不要混淆SmileUtils这个类
 							@SuppressWarnings("rawtypes")
-							Class clz = Class
-									.forName("com.fanxin.app.utils.SmileUtils");
+							Class clz = Class.forName("com.example.util.SmileUtils");
 							Field field = clz.getField(filename);
 							mEditTextContent.append(SmileUtils.getSmiledText(
 									RegisterSuccessActivity.this, (String) field.get(null)));
@@ -407,6 +418,31 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 					android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 		}
 		startActivityForResult(intent, REQUEST_CODE_LOCAL);
+	}
+	/**
+	 * 照相获取图片
+	 */
+	public void selectPicFromCamera() {
+		Intent intent=new Intent();
+		        	 // 指定开启系统相机的Action
+		             intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+		             intent.addCategory(Intent.CATEGORY_DEFAULT);
+		           	// 根据文件地址创建文件
+		            File file=new File(FILE_PATH + System.currentTimeMillis() + ".jpg");
+		            // 把文件地址转换成Uri格式
+		            Uri uri=Uri.fromFile(file);
+		         	// 设置系统相机拍摄照片完成后图片文件的存放地址
+		            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+		startActivityForResult(intent, REQUEST_CODE_CAMERA);
+	}
+	public void selectVideoFromCamera(){
+		Intent intent = new Intent();
+		             intent.setAction("android.media.action.VIDEO_CAPTURE");
+		             intent.addCategory("android.intent.category.DEFAULT");
+		             File file = new File(FILE_PATH+System.currentTimeMillis()+".mp4");
+		           	 Uri uri = Uri.fromFile(file);
+		             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+		             startActivityForResult(intent, REQUEST_CODE_SELECT_VIDEO);
 	}
 
 }
