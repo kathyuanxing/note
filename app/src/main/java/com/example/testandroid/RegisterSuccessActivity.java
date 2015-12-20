@@ -68,6 +68,7 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 	public String imageUri = "";
 	public String videoUri = "";
 	public String currentPhotoPath = "";
+	int duration=0;
 	private View buttonSetModeKeyboard;
 	private Context context;
 	private LinearLayout btnContainer;
@@ -467,12 +468,6 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 			attachmentRelativeLayout.setVisibility(View.GONE);
 			// 获取附件路径
 //			mediaUri = data.getExtras().getString("uri");
-			ChatMsgEntity entity = new ChatMsgEntity();
-			entity.setName("kathy");
-			entity.setDate(getDate());
-			entity.setPath(currentPhotoPath);
-			entity.setType(MDatabaseConstants.MESSAGE_TYPE_IMAGE);
-			entity.setMsgType(false);
 			/*将所得照片压缩，并将原图删除*/
 			// 缩略图路径
 			tempUri = MFileUtil.getMediaUri(Constants.ATTACHMENT_TYPE_IMAGE);
@@ -481,6 +476,13 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 			// 删除原图
 			MFileUtil.deleteFile(currentPhotoPath);
 			currentPhotoPath=tempUri;
+			ChatMsgEntity entity = new ChatMsgEntity();
+			entity.setName("kathy");
+			entity.setDate(getDate());
+			entity.setPath(currentPhotoPath);
+			entity.setType(MDatabaseConstants.MESSAGE_TYPE_IMAGE);
+			entity.setMsgType(false);
+
 			// 将消息写入数据库
 			writeMessage(MDatabaseConstants.MESSAGE_TYPE_IMAGE, currentPhotoPath, 0);
 			entityList.add(entity);
@@ -488,17 +490,30 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 			mListView.setSelection(mListView.getCount() - 1);// 发送一条消息时，ListView显示选择最后一项
 		} else if (requestCode == REQUEST_CODE_SELECT_VIDEO
 				&& resultCode == Activity.RESULT_OK) {
+			int duration = 0;
+			Log.v("ANDROIDDEBUG", videoUri);
+			// 隐藏添加附件的布局
+			attachmentRelativeLayout.setVisibility(View.GONE);
 			// 附件时长
-			int duration = data.getExtras().getInt("Duration");
+//			duration = data.getExtras().getInt("Duration");
 			if (duration > 30) {
 				Toast.makeText(this, "视频文件过大！", Toast.LENGTH_SHORT).show();
 				return;
 			}
 			// 获取附件路径
-			mediaUri = data.getExtras().getString("uri");
+//			mediaUri = data.getExtras().getString("uri");
+			ChatMsgEntity entity = new ChatMsgEntity();
+			entity.setName("kathy");
+			entity.setDate(getDate());
+			entity.setPath(videoUri);
+			entity.setType(MDatabaseConstants.MESSAGE_TYPE_VIDEO);
+			entity.setMsgType(false);
 			// 将消息写入数据库
-			writeMessage(MDatabaseConstants.MESSAGE_TYPE_VIDEO, mediaUri,
+			writeMessage(MDatabaseConstants.MESSAGE_TYPE_VIDEO, videoUri,
 					duration);
+			entityList.add(entity);
+			mAdapter.notifyDataSetChanged();// 通知ListView，数据已发生改变
+			mListView.setSelection(mListView.getCount() - 1);// 发送一条消息时，ListView显示选择最后一项
 		}
 	}
 

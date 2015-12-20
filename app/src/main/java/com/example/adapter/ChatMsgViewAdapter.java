@@ -49,6 +49,7 @@ public class ChatMsgViewAdapter extends BaseAdapter {
     private List<ChatMsgEntity> coll;//消息对象数组
     private LayoutInflater mInflater;
     public ChatMsgViewAdapter(Context context, List<ChatMsgEntity> coll){
+        this.context=context;
         this.coll=coll;
         mInflater=LayoutInflater.from(context);
     }
@@ -81,6 +82,7 @@ public class ChatMsgViewAdapter extends BaseAdapter {
             }
             viewHolder=new ViewHolder();
             viewHolder.tvSendTime=(TextView)convertView.findViewById(R.id.tv_sendtime);
+            viewHolder.content = (RelativeLayout) convertView.findViewById(R.id.message_content);
             viewHolder.tvUserName = (TextView) convertView.findViewById(R.id.tv_username);
             viewHolder.tvContent = (TextView) convertView.findViewById(R.id.tv_chatcontent);
             viewHolder.media=(ImageView)convertView.findViewById(R.id.message_media_imageView);
