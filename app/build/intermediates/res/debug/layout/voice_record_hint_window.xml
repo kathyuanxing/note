@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="140.0dip"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/voice_recording_textView" >
+
+            <LinearLayout
+                android:id="@+id/voice_record_hint_recording"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/voice_rcd_hint_bg"
+                android:gravity="bottom|center"
+                android:minWidth="140.0dip"
+                android:orientation="horizontal"
+                android:paddingLeft="25.0dip" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15.0dip"
+                    android:layout_marginRight="4.0dip"
+                    android:src="@drawable/voice_rcd_hint" />
+
+                <ImageView
+                    android:id="@+id/volume"
+                    android:layout_width="43sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginTop="10dip"
+                    android:src="@drawable/amp1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/voice_record_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/voice_rcd_cancel_bg"
+                android:gravity="center"
+                android:minWidth="140.0dip"
+                android:visibility="gone" >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/voice_rcd_cancel" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/voice_record_too_short"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/voice_rcd_hint_bg"
+                android:gravity="center"
+                android:minWidth="140.0dip"
+                android:visibility="gone" >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/voice_too_short" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/voice_recording_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+</LinearLayout><!-- From: file:/E:/b506项目学习资料/TestAndroid/app/src/main/res/layout/voice_record_hint_window.xml -->

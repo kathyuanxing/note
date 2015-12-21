@@ -2,16 +2,20 @@ package com.example.testandroid;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
+import android.os.Handler;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -22,6 +26,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.dao.MDatabaseConstants;
@@ -37,6 +43,7 @@ import com.example.util.MFileUtil;
 import com.example.util.MImageUtil;
 import com.example.util.MMicroUtil;
 import com.example.util.MSharedPreference;
+import com.example.util.MSoundMeter;
 import com.example.widget.ExpandGridView;
 import com.example.util.SmileUtils;
 
@@ -51,13 +58,18 @@ import java.util.List;
 
 public class RegisterSuccessActivity extends Activity implements OnClickListener {
 	private Location currentLocation;
+	private View buttonSetModeVoice;
+	private RelativeLayout edittext_layout;
+	private String audioUri; // 音频文件路径
 	private LinearLayout attachmentRelativeLayout;// 添加附件的布局
+	private Long startVoiceRecordTime, endVoiceRecordTime; // 录音开始时间、结束时间
 	private String talkerName="aaron", talkerID="aaron";
 	private Button mBtnSend;
 	private EditText mEditTextContent;
 	private ViewPager expressionViewpager;
 	private List<String> reslist;
 	private LinearLayout emojiIconContainer;
+	private View buttonPressToSpeak;
 	private View more;
 	private InputMethodManager manager;
 	private ListView mListView;
@@ -66,8 +78,19 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 	private ChatMsgViewAdapter mAdapter;
 	private Button btnMore;
 	public String imageUri = "";
+	private TextView recordingHint;
 	public String videoUri = "";
 	public String currentPhotoPath = "";
+	private MSoundMeter mSensor; // 录音器
+	private int flag = 1; // 录音标志
+	private View voiceRecordPopup; // 录音弹出框
+	private LinearLayout voiceRecordHintRecording; // 开始录音对话框
+	private LinearLayout voiceRecordCancel; // 取消录音对话框
+	private LinearLayout voiceRecordTooShort; // 录音时间过短提示框
+	private TextView voiceRecordTextView; // 用户提示文字
+	private Handler voiceRecordHandler; // 录音handler
+	private ImageView volume; // 录音音量
+	private static final int POLL_INTERVAL = 300; // 录音间隔
 	int duration=0;
 	private View buttonSetModeKeyboard;
 	private Context context;
@@ -90,7 +113,15 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 		 ThreadManager.getInstance().startGetMessageThread(context);
 	    }
 	public void initView(){
+		voiceRecordHintRecording = (LinearLayout) findViewById(R.id.voice_record_hint_recording);
+		voiceRecordTextView = (TextView) findViewById(R.id.voice_recording_textView);
+		voiceRecordCancel = (LinearLayout) findViewById(R.id.voice_record_cancel);
 		attachmentRelativeLayout = (LinearLayout) findViewById(R.id.ll_btn_container);
+		buttonPressToSpeak = findViewById(R.id.btn_press_to_speak);
+		edittext_layout = (RelativeLayout) findViewById(R.id.edittext_layout);
+		recordingHint = (TextView) findViewById(R.id.recording_hint);
+		buttonSetModeVoice = findViewById(R.id.btn_set_mode_voice);
+		voiceRecordPopup = findViewById(R.id.voice_record_popup);
 		mListView= (ListView) findViewById(R.id.listview);
 		mBtnSend= (Button) findViewById(R.id.btn_send);
 		btnMore = (Button) findViewById(R.id.btn_more);
@@ -104,6 +135,7 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 		expressionViewpager = (ViewPager) findViewById(R.id.vPager);
 		buttonSetModeKeyboard = findViewById(R.id.btn_set_mode_keyboard);
 		initData();
+		mSensor = new MSoundMeter();
 		mBtnSend.setOnClickListener(this);
 		mListView.setSelection(mAdapter.getCount() - 1);
 		// 表情list
@@ -206,12 +238,213 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 				selectVideoFromCamera();
 		}
 	}
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// 检测SD卡状态
+		if (!Environment.getExternalStorageDirectory().exists()) {
+			Toast.makeText(RegisterSuccessActivity.this, "没有SD卡", Toast.LENGTH_LONG).show();
+			return false;
+		}
+
+		// 获取录音按钮在当前界面中的绝对坐标
+		int[] location = new int[2];
+		buttonPressToSpeak.getLocationInWindow(location);
+		int audioIconX = location[0];
+		int audioIconY = location[1];
+
+		if (event.getAction() == MotionEvent.ACTION_DOWN && flag == 1) {
+			// 如果手势按下的位置在语音录制按钮的范围内，开始录音
+			if (event.getX() > audioIconX
+					&& event.getX() < audioIconX
+					+ buttonPressToSpeak.getWidth()
+					&& event.getY() > audioIconY
+					&& event.getY() < audioIconY
+					+ buttonPressToSpeak.getHeight()) {
+				// 显示录音弹出框
+				voiceRecordPopup.setVisibility(View.VISIBLE);
+				voiceRecordHintRecording.setVisibility(View.VISIBLE);
+				voiceRecordCancel.setVisibility(View.GONE);
+				voiceRecordTextView.setText("向上滑动，取消录音");
+				// 更改按钮状态
+				recordingHint.setBackgroundColor(Color.TRANSPARENT);
+				recordingHint.setText(getString(R.string.release_to_cancel));
+
+				// 记录开始录音时间
+				startVoiceRecordTime = System.currentTimeMillis();
+				// 生成音频文件存放目录
+				audioUri = MFileUtil.getMediaUri(Constants.ATTACHMENT_TYPE_AUDIO);
+
+				// 开始录音
+				startVoiceRecord(audioUri);
+
+				flag = 2;
+			}
+		} else if (event.getAction() == MotionEvent.ACTION_MOVE && flag == 2) {
+			// 录音过程中判断手势移动的位置是否是超出了语音录制按钮的范围
+			if (event.getX() <= audioIconX
+					|| event.getX() >= audioIconX
+					+ mBtnSend.getWidth()
+					|| event.getY() <= audioIconY
+					|| event.getY() >= audioIconY
+					+ mBtnSend.getHeight()) {
+				// 显示取消录音弹出框
+				voiceRecordHintRecording.setVisibility(View.GONE);
+				voiceRecordCancel.setVisibility(View.VISIBLE);
+				voiceRecordTextView.setText("松开手指，取消录音");
+			} else if (event.getX() > audioIconX
+					&& event.getX() < audioIconX
+					+ mBtnSend.getWidth()
+					&& event.getY() > audioIconY
+					&& event.getY() < audioIconY
+					+ mBtnSend.getHeight()) {
+				// 显示录音弹出框
+				voiceRecordHintRecording.setVisibility(View.VISIBLE);
+				voiceRecordCancel.setVisibility(View.GONE);
+				voiceRecordTextView.setText("向上滑动，取消录音");
+			}
+		} else if (event.getAction() == MotionEvent.ACTION_UP && flag == 2) {
+			// 更改按钮状态
+			mBtnSend.setBackgroundResource(R.drawable.btn_style_button_normal);
+			mBtnSend.setText("按住说话");
+			// 如果手势移动的位置超出了语音录制按钮的范围，取消录音
+			if (event.getX() <= audioIconX
+					|| event.getX() >= audioIconX
+					+ mBtnSend.getWidth()
+					|| event.getY() <= audioIconY
+					|| event.getY() >= audioIconY
+					+ mBtnSend.getHeight()) {
+				// 录音弹出框消失
+				voiceRecordPopup.setVisibility(View.GONE);
+
+				// 停止录音
+				stopVoiceRecord();
+				// 删除音频文件
+				try {
+					File audioFile = new File(audioUri);
+					if (audioFile.exists())
+						audioFile.delete();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				flag = 1;
+			} else {// 如果手势移动的位置在语音录制按钮的范围内
+				// 停止录音
+				stopVoiceRecord();
+
+				flag = 1;
+
+				// 计算录音时间
+				endVoiceRecordTime = System.currentTimeMillis();
+				int voiceRecordTime = (int) ((endVoiceRecordTime - startVoiceRecordTime) / 1000);
+				// 录音时间小于1S，则录音时间过短
+				if (voiceRecordTime < 1) {
+					// 提示用户录音时间过短
+					voiceRecordHintRecording.setVisibility(View.GONE);
+					voiceRecordCancel.setVisibility(View.GONE);
+					voiceRecordTooShort.setVisibility(View.VISIBLE);
+					voiceRecordTextView.setText("录音时间过短");
+
+					// 删除音频文件
+					try {
+						File audioFile = new File(audioUri);
+						if (audioFile.exists())
+							audioFile.delete();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+					// 延迟0.5s提示
+					voiceRecordHandler.postDelayed(new Runnable() {
+						@Override
+						public void run() {
+							voiceRecordTooShort.setVisibility(View.GONE);
+							// 录音弹出框消失
+							voiceRecordPopup.setVisibility(View.GONE);
+						}
+					}, 500);
+				} else {
+					// 录音弹出框消失
+					voiceRecordPopup.setVisibility(View.GONE);
+					// 将消息写入数据库
+					writeMessage(MDatabaseConstants.MESSAGE_TYPE_AUDIO,
+							audioUri, voiceRecordTime);
+				}
+
+			}
+		}
+
+		return super.onTouchEvent(event);
+	}
+	/**
+	 * 开始录音
+	 *
+	 * @param name
+	 */
+	private void startVoiceRecord(String name) {
+		mSensor.start(name);
+		voiceRecordHandler.postDelayed(mPollTask, POLL_INTERVAL);
+	}
+	/**
+	 * 停止录音
+	 */
+	private void stopVoiceRecord() {
+		voiceRecordHandler.removeCallbacks(mPollTask);
+		mSensor.stop();
+		volume.setImageResource(R.drawable.record_animate_01);
+	}
 	public void editClick(View v) {
 		mListView.setSelection(mListView.getCount() - 1);
 		if (more.getVisibility() == View.VISIBLE) {
 			more.setVisibility(View.GONE);
 			iv_emoticons_normal.setVisibility(View.VISIBLE);
 			iv_emoticons_checked.setVisibility(View.INVISIBLE);
+		}
+	}
+	private Runnable mPollTask = new Runnable() {
+		public void run() {
+			double amp = mSensor.getAmplitude();
+			// 根据音量显示不同的音量图标
+			updateDisplay(amp);
+			voiceRecordHandler.postDelayed(mPollTask, POLL_INTERVAL);
+		}
+	};
+	/**
+	 * 根据音量显示不同的音量图标
+	 *
+	 * @param signalEMA
+	 */
+	private void updateDisplay(double signalEMA) {
+
+		switch ((int) signalEMA) {
+			case 0:
+			case 1:
+				volume.setImageResource(R.drawable.record_animate_01);
+				break;
+			case 2:
+			case 3:
+				volume.setImageResource(R.drawable.record_animate_02);
+
+				break;
+			case 4:
+			case 5:
+				volume.setImageResource(R.drawable.record_animate_03);
+				break;
+			case 6:
+			case 7:
+				volume.setImageResource(R.drawable.record_animate_04);
+				break;
+			case 8:
+			case 9:
+				volume.setImageResource(R.drawable.record_animate_05);
+				break;
+			case 10:
+			case 11:
+				volume.setImageResource(R.drawable.record_animate_06);
+				break;
+			default:
+				volume.setImageResource(R.drawable.record_animate_07);
+				break;
 		}
 	}
 	/**
@@ -238,6 +471,80 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 
 		}
 
+	}
+	/**
+	 * 显示语音图标按钮
+	 *
+	 * @param view
+	 */
+	public void setModeVoice(View view) {
+		hideKeyboard();
+		edittext_layout.setVisibility(View.GONE);
+		more.setVisibility(View.GONE);
+		view.setVisibility(View.GONE);
+		buttonSetModeKeyboard.setVisibility(View.VISIBLE);
+		mBtnSend.setVisibility(View.GONE);
+		btnMore.setVisibility(View.VISIBLE);
+		buttonPressToSpeak.setVisibility(View.VISIBLE);
+		iv_emoticons_normal.setVisibility(View.VISIBLE);
+		iv_emoticons_checked.setVisibility(View.INVISIBLE);
+		btnContainer.setVisibility(View.VISIBLE);
+		emojiIconContainer.setVisibility(View.GONE);
+
+	}
+	/**
+	 * 显示键盘图标
+	 *
+	 * @param view
+	 */
+	public void setModeKeyboard(View view) {
+		// mEditTextContent.setOnFocusChangeListener(new OnFocusChangeListener()
+		// {
+		// @Override
+		// public void onFocusChange(View v, boolean hasFocus) {
+		// if(hasFocus){
+		// getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+		// }
+		// }
+		// });
+		edittext_layout.setVisibility(View.VISIBLE);
+		more.setVisibility(View.GONE);
+		view.setVisibility(View.GONE);
+		buttonSetModeVoice.setVisibility(View.VISIBLE);
+		// mEditTextContent.setVisibility(View.VISIBLE);
+		mEditTextContent.requestFocus();
+		// buttonSend.setVisibility(View.VISIBLE);
+		buttonPressToSpeak.setVisibility(View.GONE);
+		if (TextUtils.isEmpty(mEditTextContent.getText())) {
+			btnMore.setVisibility(View.VISIBLE);
+			mBtnSend.setVisibility(View.GONE);
+		} else {
+			btnMore.setVisibility(View.GONE);
+			mBtnSend.setVisibility(View.VISIBLE);
+		}
+
+	}
+	/**
+	 * 返回
+	 *
+	 * @param view
+	 */
+	public void back(View view) {
+		// if(type==3){
+		// startActivity(new
+		// Intent(getApplicationContext(),MyGroupActivity.class));
+		// finish();
+		// }else if(type==2){
+		// startActivity(new
+		// Intent(getApplicationContext(),ContactListActivity.class));
+		// finish();
+		// }else if(type==1){
+		// startActivity(new
+		// Intent(getApplicationContext(),MainActivity.class));
+		// finish();
+		// }else{
+		finish();
+		// }
 	}
 	private void send(){
 		String contString = mEditTextContent.getText().toString();
