@@ -79,5 +79,14 @@
             android:textSize="15sp"
             android:visibility="gone" />
     </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_userhead"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/margin_bar"
+        android:textColor="#818181"
+        android:textSize="15sp" />
 
 </RelativeLayout><!-- From: file:/E:/b506项目学习资料/TestAndroid/app/src/main/res/layout/left.xml -->

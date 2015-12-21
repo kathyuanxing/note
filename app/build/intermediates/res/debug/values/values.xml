@@ -12,6 +12,7 @@
     <!-- From: file:/E:/b506项目学习资料/TestAndroid/app/src/main/res/values/dimen.xml -->
     <eat-comment/>
     <dimen name="height_top_bar">48dp</dimen>
+    <dimen name="margin_bar">8dp</dimen>
     <dimen name="margin_chat_activity">5dp</dimen>
     <dimen name="size_avatar">50dp</dimen>
     <!-- From: file:/E:/b506项目学习资料/TestAndroid/app/src/main/res/values/strings.xml -->
