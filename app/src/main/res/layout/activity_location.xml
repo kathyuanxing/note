@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- 顶部  位置搜索 以及语音搜索 -->
+
+    <RelativeLayout
+        android:id="@+id/location_top_relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/general_up_bg" >
+
+        <AutoCompleteTextView
+            android:id="@+id/location_searchEt"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="45dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/location_search_textbox"
+            android:cursorVisible="false"
+            android:imeActionId="1"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/location_searchBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="14dp"
+            android:src="@drawable/contact_search_icon" />
+
+        <ImageView
+            android:id="@+id/location_searchDelete"
+            android:layout_width="40dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="45dp"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/contact_search_delete" />
+
+        <ImageView
+            android:id="@+id/location_searchVoice"
+            android:layout_width="40dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/location_voice" />
+    </RelativeLayout>
+
+    <com.amap.api.maps.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/location_bottom_relativeLayout"
+        android:layout_below="@+id/location_top_relativeLayout" />
+
+    <TextView
+        android:id="@+id/regeocode_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/location_top_relativeLayout"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/half_transparent"
+        android:padding="5dp"
+        android:textColor="@color/graywhite"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/location_bottom_relativeLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal|center_vertical"
+        android:background="@drawable/general_down_bg" >
+
+        <Button
+            android:id="@+id/location_send_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/location_send_btn"
+            android:text="发    送"
+            android:textColor="@color/graywhite"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

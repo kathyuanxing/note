@@ -21,4 +21,7 @@ android {
 dependencies {
     compile 'com.android.support:support-v4:18.0.0'
     compile files('src/main/java/libs/android-async-http-1.4.3.jar')
+    compile files('src/main/java/libs/Android_Location_V1.0.5.jar')
+    compile files('src/main/java/libs/Android_Services_2.1.4.jar')
+    compile files('src/main/java/libs/Android_Map_2.1.4.jar')
 }

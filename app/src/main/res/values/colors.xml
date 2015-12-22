@@ -2,4 +2,7 @@
 <resources>
     <color name="btn_gray_normal">#c0c0c0</color>
     <color name="common_top_bar_blue">#22292c</color>
+    <color name="white">#FFFFFF</color><!--白色 -->
+    <color name="half_transparent">#88000000</color>
+    <color name="graywhite">#F5F5F5</color>
 </resources>

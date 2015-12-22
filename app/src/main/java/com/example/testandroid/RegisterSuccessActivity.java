@@ -96,6 +96,7 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 	private View buttonSetModeKeyboard;
 	private Context context;
 	private LinearLayout btnContainer;
+	private static final int REQUEST_CODE_LOCATION = 3;
 	public static final int REQUEST_CODE_CAMERA = 18;
 	public static final int REQUEST_CODE_LOCAL = 19;
 	public static final int REQUEST_CODE_SELECT_VIDEO = 23;
@@ -236,7 +237,8 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 				break;
 				// 点击位置图标
 			case R.id.btn_location:
-//				startActivityForResult(new Intent(this, BaiduMapActivity.class), REQUEST_CODE_MAP);
+				startActivityForResult(new Intent(this, LocationActivity.class),
+						REQUEST_CODE_LOCATION);
 				break;
 			case R.id.btn_video:
 				// 点击摄像图标

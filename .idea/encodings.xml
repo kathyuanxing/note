@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/libs/Android_Location_V1.0.5.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/libs/Android_Map_2.1.4.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/libs/Android_Services_2.1.4.jar" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/amp1.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/amp1.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/amp1.png" charset="UTF-8" />
@@ -21,6 +24,7 @@
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/voice_rcd_hint.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/voice_rcd_hint_bg.9.png" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/voice_too_short.png" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_location.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_profile.xml" charset="UTF-8" />
   </component>
 </project>
