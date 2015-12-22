@@ -65,3 +65,7 @@ uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
 ADDED from AndroidManifest.xml:33:5
 	android:name
 		ADDED from AndroidManifest.xml:33:22
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from AndroidManifest.xml:35:5
+	android:name
+		ADDED from AndroidManifest.xml:36:9

@@ -70,6 +70,7 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 	private List<String> reslist;
 	private LinearLayout emojiIconContainer;
 	private View buttonPressToSpeak;
+	private TextView captureAudioButton;// 录音按钮
 	private View more;
 	private InputMethodManager manager;
 	private ListView mListView;
@@ -116,8 +117,11 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 		voiceRecordHintRecording = (LinearLayout) findViewById(R.id.voice_record_hint_recording);
 		voiceRecordTextView = (TextView) findViewById(R.id.voice_recording_textView);
 		voiceRecordCancel = (LinearLayout) findViewById(R.id.voice_record_cancel);
+		volume = (ImageView) findViewById(R.id.volume);
 		attachmentRelativeLayout = (LinearLayout) findViewById(R.id.ll_btn_container);
+		voiceRecordTooShort = (LinearLayout) findViewById(R.id.voice_record_too_short);
 		buttonPressToSpeak = findViewById(R.id.btn_press_to_speak);
+		captureAudioButton = (TextView) findViewById(R.id.capture_audio_button);
 		edittext_layout = (RelativeLayout) findViewById(R.id.edittext_layout);
 		recordingHint = (TextView) findViewById(R.id.recording_hint);
 		buttonSetModeVoice = findViewById(R.id.btn_set_mode_voice);
@@ -137,6 +141,7 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 		initData();
 		mSensor = new MSoundMeter();
 		mBtnSend.setOnClickListener(this);
+		voiceRecordHandler = new Handler();
 		mListView.setSelection(mAdapter.getCount() - 1);
 		// 表情list
 		reslist = getExpressionRes(35);
@@ -266,8 +271,7 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 				voiceRecordCancel.setVisibility(View.GONE);
 				voiceRecordTextView.setText("向上滑动，取消录音");
 				// 更改按钮状态
-				recordingHint.setBackgroundColor(Color.TRANSPARENT);
-				recordingHint.setText(getString(R.string.release_to_cancel));
+				captureAudioButton.setText("松开结束");
 
 				// 记录开始录音时间
 				startVoiceRecordTime = System.currentTimeMillis();
@@ -283,36 +287,37 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 			// 录音过程中判断手势移动的位置是否是超出了语音录制按钮的范围
 			if (event.getX() <= audioIconX
 					|| event.getX() >= audioIconX
-					+ mBtnSend.getWidth()
+					+ buttonPressToSpeak.getWidth()
 					|| event.getY() <= audioIconY
 					|| event.getY() >= audioIconY
-					+ mBtnSend.getHeight()) {
+					+ buttonPressToSpeak.getHeight()) {
 				// 显示取消录音弹出框
-				voiceRecordHintRecording.setVisibility(View.GONE);
-				voiceRecordCancel.setVisibility(View.VISIBLE);
+				voiceRecordHintRecording.setVisibility(View.VISIBLE);
+				voiceRecordCancel.setVisibility(View.GONE);
 				voiceRecordTextView.setText("松开手指，取消录音");
+				captureAudioButton.setText("松开结束");
 			} else if (event.getX() > audioIconX
 					&& event.getX() < audioIconX
-					+ mBtnSend.getWidth()
+					+ buttonPressToSpeak.getWidth()
 					&& event.getY() > audioIconY
 					&& event.getY() < audioIconY
-					+ mBtnSend.getHeight()) {
+					+ buttonPressToSpeak.getHeight()) {
 				// 显示录音弹出框
 				voiceRecordHintRecording.setVisibility(View.VISIBLE);
 				voiceRecordCancel.setVisibility(View.GONE);
 				voiceRecordTextView.setText("向上滑动，取消录音");
+				captureAudioButton.setText("松开结束");
 			}
 		} else if (event.getAction() == MotionEvent.ACTION_UP && flag == 2) {
 			// 更改按钮状态
-			mBtnSend.setBackgroundResource(R.drawable.btn_style_button_normal);
-			mBtnSend.setText("按住说话");
+			captureAudioButton.setText("按住说话");
 			// 如果手势移动的位置超出了语音录制按钮的范围，取消录音
 			if (event.getX() <= audioIconX
 					|| event.getX() >= audioIconX
-					+ mBtnSend.getWidth()
+					+ buttonPressToSpeak.getWidth()
 					|| event.getY() <= audioIconY
 					|| event.getY() >= audioIconY
-					+ mBtnSend.getHeight()) {
+					+ buttonPressToSpeak.getHeight()) {
 				// 录音弹出框消失
 				voiceRecordPopup.setVisibility(View.GONE);
 
@@ -366,9 +371,18 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 				} else {
 					// 录音弹出框消失
 					voiceRecordPopup.setVisibility(View.GONE);
+					ChatMsgEntity entity = new ChatMsgEntity();
+					entity.setName("kathy");
+					entity.setDate(getDate());
+					entity.setPath(audioUri);
+					entity.setType(MDatabaseConstants.MESSAGE_TYPE_AUDIO);
+					entity.setMsgType(false);
 					// 将消息写入数据库
 					writeMessage(MDatabaseConstants.MESSAGE_TYPE_AUDIO,
 							audioUri, voiceRecordTime);
+					entityList.add(entity);
+					mAdapter.notifyDataSetChanged();// 通知ListView，数据已发生改变
+					mListView.setSelection(mListView.getCount() - 1);// 发送一条消息时，ListView显示选择最后一项
 				}
 
 			}
@@ -391,7 +405,7 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 	private void stopVoiceRecord() {
 		voiceRecordHandler.removeCallbacks(mPollTask);
 		mSensor.stop();
-		volume.setImageResource(R.drawable.record_animate_01);
+		volume.setImageResource(R.drawable.amp1);
 	}
 	public void editClick(View v) {
 		mListView.setSelection(mListView.getCount() - 1);
@@ -419,31 +433,31 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 		switch ((int) signalEMA) {
 			case 0:
 			case 1:
-				volume.setImageResource(R.drawable.record_animate_01);
+				volume.setImageResource(R.drawable.amp1);
 				break;
 			case 2:
 			case 3:
-				volume.setImageResource(R.drawable.record_animate_02);
+				volume.setImageResource(R.drawable.amp2);
 
 				break;
 			case 4:
 			case 5:
-				volume.setImageResource(R.drawable.record_animate_03);
+				volume.setImageResource(R.drawable.amp3);
 				break;
 			case 6:
 			case 7:
-				volume.setImageResource(R.drawable.record_animate_04);
+				volume.setImageResource(R.drawable.amp4);
 				break;
 			case 8:
 			case 9:
-				volume.setImageResource(R.drawable.record_animate_05);
+				volume.setImageResource(R.drawable.amp5);
 				break;
 			case 10:
 			case 11:
-				volume.setImageResource(R.drawable.record_animate_06);
+				volume.setImageResource(R.drawable.amp6);
 				break;
 			default:
-				volume.setImageResource(R.drawable.record_animate_07);
+				volume.setImageResource(R.drawable.amp7);
 				break;
 		}
 	}

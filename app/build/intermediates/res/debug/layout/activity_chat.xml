@@ -129,25 +129,13 @@
                 android:visibility="gone" >
 
                 <TextView
+                    android:id="@+id/capture_audio_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:text="@string/button_pushtotalk"
                     android:textColor="#666666"
                     android:textSize="16sp" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/voice_record_popup"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:visibility="gone" >
-
-                <include
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    layout="@layout/voice_record_hint_window" />
             </LinearLayout>
 
             <RelativeLayout
@@ -514,5 +502,18 @@
                 android:textSize="10sp" />
         </RelativeLayout>
     </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/voice_record_popup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        >
 
+        <include
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            layout="@layout/voice_record_hint_window" />
+    </LinearLayout>
 </RelativeLayout><!-- From: file:/E:/b506项目学习资料/TestAndroid/app/src/main/res/layout/activity_chat.xml -->
