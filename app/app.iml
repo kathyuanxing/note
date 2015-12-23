@@ -89,6 +89,7 @@
     <orderEntry type="library" exported="" name="support-v4-18.0.0" level="project" />
     <orderEntry type="library" exported="" name="Android_Map_2.1.4" level="project" />
     <orderEntry type="library" exported="" name="android-async-http-1.4.3" level="project" />
+    <orderEntry type="library" exported="" name="armeabi" level="project" />
     <orderEntry type="library" exported="" name="Android_Location_V1.0.5" level="project" />
     <orderEntry type="library" exported="" name="Android_Services_2.1.4" level="project" />
   </component>
