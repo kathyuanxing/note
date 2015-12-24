@@ -2,6 +2,7 @@ package com.example.testandroid;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Handler;
@@ -57,6 +58,7 @@ import java.util.List;
 
 
 public class RegisterSuccessActivity extends Activity implements OnClickListener {
+	private File tempFile;
 	private Location currentLocation;
 	private View buttonSetModeVoice;
 	private RelativeLayout edittext_layout;
@@ -735,22 +737,6 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 		return view;
 	}
 	/**
-	 * 从图库获取图片
-	 */
-	public void selectPicFromLocal() {
-		Intent intent;
-		if (Build.VERSION.SDK_INT < 19) {
-			intent = new Intent(Intent.ACTION_GET_CONTENT);
-			intent.setType("image/*");
-
-		} else {
-			intent = new Intent(
-					Intent.ACTION_PICK,
-					android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-		}
-		startActivityForResult(intent, REQUEST_CODE_LOCAL);
-	}
-	/**
 	 * 照相获取图片
 	 */
 	public void selectPicFromCamera() {
@@ -777,6 +763,16 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 		           	 Uri uri = Uri.fromFile(file);
 		             intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 		             startActivityForResult(intent, REQUEST_CODE_SELECT_VIDEO);
+	}
+	/**
+	 * 从图库获取图片
+	 */
+	public void selectPicFromLocal() {
+		Intent mIntent;
+		mIntent = new Intent(
+				Intent.ACTION_PICK,
+				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		startActivityForResult(mIntent, REQUEST_CODE_LOCAL);
 	}
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -837,7 +833,55 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 			entityList.add(entity);
 			mAdapter.notifyDataSetChanged();// 通知ListView，数据已发生改变
 			mListView.setSelection(mListView.getCount() - 1);// 发送一条消息时，ListView显示选择最后一项
+		}else if(requestCode == REQUEST_CODE_LOCATION
+				&& resultCode == Activity.RESULT_OK) {
+			String location = data.getStringExtra("location");
+			ChatMsgEntity entity = new ChatMsgEntity();
+			entity.setName("kathy");
+			entity.setDate(getDate());
+			entity.setType(MDatabaseConstants.MESSAGE_TYPE_LOCATION);
+			entity.setMsgType(false);
+
+			// 将位置信息写入数据库
+			writeMessage(MDatabaseConstants.MESSAGE_TYPE_LOCATION, location, 0);
+			entityList.add(entity);
+			mAdapter.notifyDataSetChanged();// 通知ListView，数据已发生改变
+			mListView.setSelection(mListView.getCount() - 1);// 发送一条消息时，ListView显示选择最后一项
+		}else if(requestCode==REQUEST_CODE_LOCAL) {
+			if (data == null) {
+				imageUri = "";
+			} else {
+				// 获得图片的uri
+				Uri originalUri = data.getData();
+				tempUri = originalUri.getPath();
+
+				// 判断是否需要索引路径
+				if (tempUri.lastIndexOf(".") == -1) {
+					String[] proj = {MediaStore.Images.Media.DATA};
+					Cursor cursor = managedQuery(originalUri, proj, null, null,
+							null);
+					// 获得用户选择的图片的索引值
+					int column_index = cursor
+							.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+					cursor.moveToFirst();
+					// 最后根据索引值获取图片路径
+					tempUri = cursor.getString(column_index);
+				}
+				// 压缩所选取的图片，并把压缩的图片路径传给上级Activity
+				imageUri = MFileUtil.getMediaUri(Constants.ATTACHMENT_TYPE_IMAGE);
+				// 生成缩略图
+				MImageUtil.getThumbnail(tempUri, imageUri);
+				ChatMsgEntity entity = new ChatMsgEntity();
+				entity.setName("kathy");
+				entity.setDate(getDate());
+				entity.setPath(imageUri);
+				entity.setType(MDatabaseConstants.MESSAGE_TYPE_IMAGE);
+				entity.setMsgType(false);
+				writeMessage(MDatabaseConstants.MESSAGE_TYPE_IMAGE, imageUri, 0);
+				entityList.add(entity);
+				mAdapter.notifyDataSetChanged();// 通知ListView，数据已发生改变
+				mListView.setSelection(mListView.getCount() - 1);// 发送一条消息时，ListView显示选择最后一项
+			}
 		}
 	}
-
 }

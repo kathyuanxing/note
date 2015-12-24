@@ -25,6 +25,8 @@ import android.widget.BaseAdapter;
 
 import com.example.dao.MDatabaseConstants;
 import com.example.entity.ChatMsgEntity;
+import com.example.entity.MMessage;
+import com.example.testandroid.LocationActivity;
 import com.example.testandroid.R;
 import com.example.util.MImageUtil;
 
@@ -72,7 +74,7 @@ public class ChatMsgViewAdapter extends BaseAdapter {
         //position从上至下升序排列
         final ViewHolder viewHolder;
         Log.d("position",position+"");
-        ChatMsgEntity entity=coll.get(position);
+        final ChatMsgEntity entity=coll.get(position);
         boolean isComMsg=entity.getMsgType();
         if(convertView==null){
             if(isComMsg){
@@ -221,6 +223,31 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 
             case MDatabaseConstants.MESSAGE_TYPE_LOCATION:
                 //显示位置
+                //显示位置
+                viewHolder.tvContent.setVisibility(View.GONE);
+                viewHolder.media.setVisibility(View.GONE);
+                viewHolder.location.setVisibility(View.VISIBLE);
+
+                // 给viewHolder.media赋值一个Animation对象（动态图）
+                viewHolder.location.setBackgroundResource(R.drawable.location_animation_run);
+                AnimationDrawable animLocation = (AnimationDrawable) viewHolder.location.getBackground();
+                animLocation.start();
+
+                viewHolder.content.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        // 获取位置消息
+                        String location = entity.getMessage();
+                        // 传入参数并跳转到地图显示界面
+                        Intent intent = new Intent(context, LocationActivity.class);
+                        intent.putExtra("location", location);
+                        // 跳转到地图显示界面
+                        context.startActivity(intent);
+                    }
+
+                });
+
                 break;
 
             case MDatabaseConstants.MESSAGE_TYPE_TRACK:

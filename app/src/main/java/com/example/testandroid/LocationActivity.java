@@ -67,7 +67,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Î»ÖÃ
+ * ä½ç½®
  *
  */
 public class LocationActivity extends Activity implements LocationSource,
@@ -84,7 +84,7 @@ public class LocationActivity extends Activity implements LocationSource,
     private MediaPlayer mPlayer;
     private OnLocationChangedListener mListener;
     private LocationManagerProxy mAMapLocationManager;
-    private Handler handler;// ½ÓÊÕÇëÇóÊı¾İµÄhandler
+    private Handler handler;// æ¥æ”¶è¯·æ±‚æ•°æ®çš„handler
     private TextView regeocodeTextView;
     private GeocodeSearch geocoderSearch;
     List<LatLng> pointList = new ArrayList<LatLng>();
@@ -94,38 +94,38 @@ public class LocationActivity extends Activity implements LocationSource,
     private String location;
     private AMapLocation myLocation;
 
-    private AutoCompleteTextView searchText;// ÊäÈëËÑË÷¹Ø¼ü×Ö
-    private String keyWord = "";// poiËÑË÷¹Ø¼ü×Ö
-    private ProgressDialog progDialog = null;// ËÑË÷Ê±½ø¶ÈÌõ
-    private EditText editCity;// ³ÇÊĞ
-    private PoiResult poiResult; // poi·µ»ØµÄ½á¹û
-    private int currentPage = 0;// µ±Ç°Ò³Ãæ£¬´Ó0¿ªÊ¼¼ÆÊı
-    private PoiSearch.Query query;// Poi²éÑ¯Ìõ¼şÀà
-    private PoiSearch poiSearch;// POIËÑË÷
+    private AutoCompleteTextView searchText;// è¾“å…¥æœç´¢å…³é”®å­—
+    private String keyWord = "";// poiæœç´¢å…³é”®å­—
+    private ProgressDialog progDialog = null;// æœç´¢æ—¶è¿›åº¦æ¡
+    private EditText editCity;// åŸå¸‚
+    private PoiResult poiResult; // poiè¿”å›çš„ç»“æœ
+    private int currentPage = 0;// å½“å‰é¡µé¢ï¼Œä»0å¼€å§‹è®¡æ•°
+    private PoiSearch.Query query;// PoiæŸ¥è¯¢æ¡ä»¶ç±»
+    private PoiSearch poiSearch;// POIæœç´¢
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        // ÉèÖÃÓ¦ÓÃµ¥¶ÀµÄµØÍ¼´æ´¢Ä¿Â¼£¬ÔÚÏÂÔØÀëÏßµØÍ¼»ò³õÊ¼»¯µØÍ¼Ê±ÉèÖÃ
+        // è®¾ç½®åº”ç”¨å•ç‹¬çš„åœ°å›¾å­˜å‚¨ç›®å½•ï¼Œåœ¨ä¸‹è½½ç¦»çº¿åœ°å›¾æˆ–åˆå§‹åŒ–åœ°å›¾æ—¶è®¾ç½®
         MapsInitializer.sdcardDir = getSdCacheDir(this);
         setContentView(R.layout.activity_location);
         mapView = (MapView) findViewById(R.id.map);
-        mapView.onCreate(savedInstanceState);// ´Ë·½·¨±ØĞëÖØĞ´
+        mapView.onCreate(savedInstanceState);// æ­¤æ–¹æ³•å¿…é¡»é‡å†™
         Intent intent = getIntent();
         location = intent.getStringExtra("location");
         if (location != null) {
             isShowLocation = true;
         }
         init();
-        // initHandler();// ³õÊ¼»¯handler
+        // initHandler();// åˆå§‹åŒ–handler
         if (isShowLocation) {
             showLocation();
         }
     }
 
     /**
-     * ³õÊ¼»¯AMap¶ÔÏó
+     * åˆå§‹åŒ–AMapå¯¹è±¡
      */
     private void init() {
         if (aMap == null) {
@@ -150,31 +150,31 @@ public class LocationActivity extends Activity implements LocationSource,
     }
 
     /**
-     * ÉèÖÃµØÍ¼
+     * è®¾ç½®åœ°å›¾
      */
     private void setupMap() {
         if (!isShowLocation) {
             aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Constants.WUHAN,
                     18));
-            // ×Ô¶¨ÒåÏµÍ³¶¨Î»Ğ¡À¶µã
+            // è‡ªå®šä¹‰ç³»ç»Ÿå®šä½å°è“ç‚¹
             MyLocationStyle myLocationStyle = new MyLocationStyle();
             myLocationStyle.myLocationIcon(BitmapDescriptorFactory
-                    .fromResource(R.drawable.location_marker));// ÉèÖÃĞ¡À¶µãµÄÍ¼±ê
-            myLocationStyle.strokeColor(Color.BLUE);// ÉèÖÃÔ²ĞÎµÄ±ß¿òÑÕÉ«
-            // myLocationStyle.radiusFillColor(color)//ÉèÖÃÔ²ĞÎµÄÌî³äÑÕÉ«
-            // myLocationStyle.anchor(int,int)//ÉèÖÃĞ¡À¶µãµÄÃªµã
-            myLocationStyle.strokeWidth(2);// ÉèÖÃÔ²ĞÎµÄ±ß¿ò´ÖÏ¸
+                    .fromResource(R.drawable.location_marker));// è®¾ç½®å°è“ç‚¹çš„å›¾æ ‡
+            myLocationStyle.strokeColor(Color.BLUE);// è®¾ç½®åœ†å½¢çš„è¾¹æ¡†é¢œè‰²
+            // myLocationStyle.radiusFillColor(color)//è®¾ç½®åœ†å½¢çš„å¡«å……é¢œè‰²
+            // myLocationStyle.anchor(int,int)//è®¾ç½®å°è“ç‚¹çš„é”šç‚¹
+            myLocationStyle.strokeWidth(2);// è®¾ç½®åœ†å½¢çš„è¾¹æ¡†ç²—ç»†
             aMap.setMyLocationStyle(myLocationStyle);
-            aMap.setLocationSource(this);// ÉèÖÃ¶¨Î»¼àÌı
-            aMap.setMyLocationEnabled(true);// ÉèÖÃÎªtrue±íÊ¾ÏÔÊ¾¶¨Î»²ã²¢¿É´¥·¢¶¨Î»£¬false±íÊ¾Òş²Ø¶¨Î»²ã²¢²»¿É´¥·¢¶¨Î»£¬Ä¬ÈÏÊÇfalse
-            aMap.setOnMapClickListener(this);// ¶ÔamapÌí¼Óµ¥»÷µØÍ¼ÊÂ¼ş¼àÌıÆ÷
-            // aMap.setOnMapLongClickListener(this);// ¶ÔamapÌí¼Ó³¤°´µØÍ¼ÊÂ¼ş¼àÌıÆ÷
+            aMap.setLocationSource(this);// è®¾ç½®å®šä½ç›‘å¬
+            aMap.setMyLocationEnabled(true);// è®¾ç½®ä¸ºtrueè¡¨ç¤ºæ˜¾ç¤ºå®šä½å±‚å¹¶å¯è§¦å‘å®šä½ï¼Œfalseè¡¨ç¤ºéšè—å®šä½å±‚å¹¶ä¸å¯è§¦å‘å®šä½ï¼Œé»˜è®¤æ˜¯false
+            aMap.setOnMapClickListener(this);// å¯¹amapæ·»åŠ å•å‡»åœ°å›¾äº‹ä»¶ç›‘å¬å™¨
+            // aMap.setOnMapLongClickListener(this);// å¯¹amapæ·»åŠ é•¿æŒ‰åœ°å›¾äº‹ä»¶ç›‘å¬å™¨
         }
         mUiSettings = aMap.getUiSettings();
-        mUiSettings.setMyLocationButtonEnabled(true);// ÉèÖÃÄ¬ÈÏ¶¨Î»°´Å¥ÊÇ·ñÏÔÊ¾
+        mUiSettings.setMyLocationButtonEnabled(true);// è®¾ç½®é»˜è®¤å®šä½æŒ‰é’®æ˜¯å¦æ˜¾ç¤º
         mUiSettings.setScaleControlsEnabled(true);
-        aMap.setInfoWindowAdapter(this);// ÉèÖÃ×Ô¶¨ÒåInfoWindowÑùÊ½
-        aMap.setOnMarkerClickListener(this);// ÉèÖÃµã»÷markerÊÂ¼ş¼àÌıÆ÷
+        aMap.setInfoWindowAdapter(this);// è®¾ç½®è‡ªå®šä¹‰InfoWindowæ ·å¼
+        aMap.setOnMarkerClickListener(this);// è®¾ç½®ç‚¹å‡»markeräº‹ä»¶ç›‘å¬å™¨
     }
 
     @Override
@@ -182,7 +182,7 @@ public class LocationActivity extends Activity implements LocationSource,
         // TODO Auto-generated method stub
     }
 
-    // ÏÔÊ¾Î»ÖÃĞÅÏ¢
+    // æ˜¾ç¤ºä½ç½®ä¿¡æ¯
     private void showLocation() {
         double latitude = Double.parseDouble(location.substring(1,
                 location.indexOf(",")));
@@ -197,7 +197,7 @@ public class LocationActivity extends Activity implements LocationSource,
     }
 
     /**
-     * »ñÈ¡map »º´æºÍ¶ÁÈ¡Ä¿Â¼
+     * è·å–map ç¼“å­˜å’Œè¯»å–ç›®å½•
      *
      * @param context
      * @return
@@ -270,19 +270,19 @@ public class LocationActivity extends Activity implements LocationSource,
     }
 
     /**
-     * ¶¨Î»³É¹¦ºó»Øµ÷º¯Êı
+     * å®šä½æˆåŠŸåå›è°ƒå‡½æ•°
      */
     @Override
     public void onLocationChanged(AMapLocation location) {
         // TODO Auto-generated method stub
         if (mListener != null) {
-            mListener.onLocationChanged(location);// ÏÔÊ¾ÏµÍ³Ğ¡À¶µã
+            mListener.onLocationChanged(location);// æ˜¾ç¤ºç³»ç»Ÿå°è“ç‚¹
         }
         myLocation = location;
     }
 
     /**
-     * ¼¤»î¶¨Î»
+     * æ¿€æ´»å®šä½
      */
     @Override
     public void activate(OnLocationChangedListener arg0) {
@@ -293,9 +293,9 @@ public class LocationActivity extends Activity implements LocationSource,
             mAMapLocationManager.setGpsEnable(true);
 			/*
 			 * mAMapLocManager.setGpsEnable(false);
-			 * 1.0.2°æ±¾ĞÂÔö·½·¨£¬ÉèÖÃtrue±íÊ¾»ìºÏ¶¨Î»ÖĞ°üº¬gps¶¨Î»£¬false±íÊ¾´¿ÍøÂç¶¨Î»£¬Ä¬ÈÏÊÇtrue Location
-			 * API¶¨Î»²ÉÓÃGPSºÍÍøÂç»ìºÏ¶¨Î»·½Ê½
-			 * £¬µÚÒ»¸ö²ÎÊıÊÇ¶¨Î»provider£¬µÚ¶ş¸ö²ÎÊıÊ±¼ä×î¶ÌÊÇ5000ºÁÃë£¬µÚÈı¸ö²ÎÊı¾àÀë¼ä¸ôµ¥Î»ÊÇÃ×£¬µÚËÄ¸ö²ÎÊıÊÇ¶¨Î»¼àÌıÕß
+			 * 1.0.2ç‰ˆæœ¬æ–°å¢æ–¹æ³•ï¼Œè®¾ç½®trueè¡¨ç¤ºæ··åˆå®šä½ä¸­åŒ…å«gpså®šä½ï¼Œfalseè¡¨ç¤ºçº¯ç½‘ç»œå®šä½ï¼Œé»˜è®¤æ˜¯true Location
+			 * APIå®šä½é‡‡ç”¨GPSå’Œç½‘ç»œæ··åˆå®šä½æ–¹å¼
+			 * ï¼Œç¬¬ä¸€ä¸ªå‚æ•°æ˜¯å®šä½providerï¼Œç¬¬äºŒä¸ªå‚æ•°æ—¶é—´æœ€çŸ­æ˜¯5000æ¯«ç§’ï¼Œç¬¬ä¸‰ä¸ªå‚æ•°è·ç¦»é—´éš”å•ä½æ˜¯ç±³ï¼Œç¬¬å››ä¸ªå‚æ•°æ˜¯å®šä½ç›‘å¬è€…
 			 */
             mAMapLocationManager.requestLocationUpdates(
                     LocationProviderProxy.AMapNetwork, 5000, 0, this);
@@ -303,7 +303,7 @@ public class LocationActivity extends Activity implements LocationSource,
     }
 
     /**
-     * Í£Ö¹¶¨Î»
+     * åœæ­¢å®šä½
      */
     @Override
     public void deactivate() {
@@ -353,7 +353,7 @@ public class LocationActivity extends Activity implements LocationSource,
             case R.id.location_send_button:
                 if (point == null) {
                     if (myLocation == null) {
-                        ToastUtils.show(this, "Ã»ÓĞ¿ÉÓÃÎ»ÖÃ");
+                        ToastUtils.show(this, "æ²¡æœ‰å¯ç”¨ä½ç½®");
                         return;
                     }
                     point = new LatLng(myLocation.getLatitude(),
@@ -404,7 +404,7 @@ public class LocationActivity extends Activity implements LocationSource,
     }
 
     /**
-     * markerÌø¶¯Ò»ÏÂ
+     * markerè·³åŠ¨ä¸€ä¸‹
      */
     public void jumpPoint(final Marker marker) {
         final Handler handler = new Handler();
@@ -446,12 +446,12 @@ public class LocationActivity extends Activity implements LocationSource,
     }
 
     /**
-     * ÏìÓ¦ÄæµØÀí±àÂë
+     * å“åº”é€†åœ°ç†ç¼–ç 
      */
     public void getAddress(final LatLonPoint latLonPoint) {
         RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 200,
-                GeocodeSearch.AMAP);// µÚÒ»¸ö²ÎÊı±íÊ¾Ò»¸öLatlng£¬µÚ¶ş²ÎÊı±íÊ¾·¶Î§¶àÉÙÃ×£¬µÚÈı¸ö²ÎÊı±íÊ¾ÊÇ»ğÏµ×ø±êÏµ»¹ÊÇGPSÔ­Éú×ø±êÏµ
-        geocoderSearch.getFromLocationAsyn(query);// ÉèÖÃÍ¬²½ÄæµØÀí±àÂëÇëÇó
+                GeocodeSearch.AMAP);// ç¬¬ä¸€ä¸ªå‚æ•°è¡¨ç¤ºä¸€ä¸ªLatlngï¼Œç¬¬äºŒå‚æ•°è¡¨ç¤ºèŒƒå›´å¤šå°‘ç±³ï¼Œç¬¬ä¸‰ä¸ªå‚æ•°è¡¨ç¤ºæ˜¯ç«ç³»åæ ‡ç³»è¿˜æ˜¯GPSåŸç”Ÿåæ ‡ç³»
+        geocoderSearch.getFromLocationAsyn(query);// è®¾ç½®åŒæ­¥é€†åœ°ç†ç¼–ç è¯·æ±‚
     }
 
     @Override
@@ -467,9 +467,9 @@ public class LocationActivity extends Activity implements LocationSource,
             if (result != null && result.getRegeocodeAddress() != null
                     && result.getRegeocodeAddress().getFormatAddress() != null) {
                 String addressName = result.getRegeocodeAddress()
-                        .getFormatAddress() + "¸½½ü";
+                        .getFormatAddress() + "é™„è¿‘";
                 if (isShowLocation) {
-                    mMarker.setTitle("Î»ÖÃĞÅÏ¢£º");
+                    mMarker.setTitle("ä½ç½®ä¿¡æ¯ï¼š");
                     mMarker.setSnippet(addressName);
                     mMarker.showInfoWindow();
                 } else {
