@@ -16,7 +16,7 @@
 			android:orientation="vertical"
 			android:background="@color/windows_color">
 			<ListView
-				android:id="@+id/lvContact"
+				android:id="@android:id/list"
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent"
 				android:scrollbars="none"

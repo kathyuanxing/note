@@ -8,7 +8,6 @@ import com.example.entity.Contact;
 import com.example.testandroid.MenuActivity;
 import com.example.util.Constants;
 import com.example.dao.ContactDao;
-import com.example.testandroid.MainActivity;
 import com.example.util.FileUtils;
 import com.example.util.MSharedPreference;
 

@@ -75,6 +75,37 @@ public class Contact {
         this.contact_remark = contact_remark;
         this.sortLetters = sortLetters;
     }
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "contact_id=" + contact_id +
+                ", contact_userid='" + contact_userid + '\'' +
+                ", contact_name='" + contact_name + '\'' +
+                ", contact_siptel1='" + contact_siptel1 + '\'' +
+                ", contact_siptel2='" + contact_siptel2 + '\'' +
+                ", contact_nickname='" + contact_nickname + '\'' +
+                ", contact_image_path='" + contact_image_path + '\'' +
+                ", contact_province='" + contact_province + '\'' +
+                ", contact_position='" + contact_position + '\'' +
+                ", contact_post='" + contact_post + '\'' +
+                ", contact_telephone=" + contact_telephone +
+                ", contact_chushi='" + contact_chushi + '\'' +
+                ", contact_workvoice='" + contact_workvoice + '\'' +
+                ", contact_ord='" + contact_ord + '\'' +
+                ", contact_fax='" + contact_fax + '\'' +
+                ", contact_message='" + contact_message + '\'' +
+                ", contact_department='" + contact_department + '\'' +
+                ", contact_department_id='" + contact_department_id + '\'' +
+                ", contact_work_number=" + contact_work_number +
+                ", contact_work_id=" + contact_work_id +
+                ", contact_short_phone_num=" + contact_short_phone_num +
+                ", contact_email='" + contact_email + '\'' +
+                ", contact_state='" + contact_state + '\'' +
+                ", contact_update_time=" + contact_update_time +
+                ", contact_remark='" + contact_remark + '\'' +
+                ", sortLetters='" + sortLetters + '\'' +
+                '}';
+    }
 
     public int getContact_id() {
         return contact_id;
