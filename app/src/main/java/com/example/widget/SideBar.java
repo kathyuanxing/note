@@ -50,7 +50,7 @@ public class SideBar extends View {
 	public void setTextView(TextView mDialogText) {
 		this.mDialogText = mDialogText;
 	}
-	
+
 	public boolean onTouchEvent(MotionEvent event) {
 		super.onTouchEvent(event);
 		int i = (int) event.getY();

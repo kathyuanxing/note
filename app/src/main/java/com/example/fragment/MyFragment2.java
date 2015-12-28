@@ -2,6 +2,7 @@
 package com.example.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -18,6 +19,8 @@ import com.example.dao.ContactDao;
 import com.example.entity.ChatMsgEntity;
 import com.example.entity.Contact;
 import com.example.entity.ContactRow;
+import com.example.testandroid.LocationActivity;
+import com.example.testandroid.RegisterSuccessActivity;
 import com.example.util.Constants;
 
 import com.example.testandroid.R;
@@ -54,16 +57,20 @@ public class MyFragment2 extends ListFragment implements OnItemClickListener {
 		if (contactArrayList != null && !contactArrayList.isEmpty()) {
 			contactAdapter = new ContactAdapter(ctx, contactRowList);
 			list.setAdapter(contactAdapter);
+			list.setOnItemClickListener(this);
 		}else {
 			Toast.makeText(ctx, "empty", Toast.LENGTH_SHORT).show();
 		}
 	}
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-							long id) {
-
-		Toast.makeText(getActivity(), "test", Toast.LENGTH_SHORT).show();
-
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		Log.d("testClick","test");
+		String itemTitle;
+		ContactRow mycontactRow =contactRowList.get(position);
+		itemTitle=mycontactRow.getTitle();
+		Intent intent=new Intent(ctx, RegisterSuccessActivity.class);
+		intent.putExtra("itemTitle",itemTitle);
+		startActivity(intent);
 	}
 	private void initViews() {
 		ctx = this.getActivity();

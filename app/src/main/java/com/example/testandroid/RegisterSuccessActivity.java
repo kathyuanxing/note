@@ -82,6 +82,7 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 	private Button btnMore;
 	public String imageUri = "";
 	private TextView recordingHint;
+	private TextView itemName;
 	public String videoUri = "";
 	public String currentPhotoPath = "";
 	private MSoundMeter mSensor; // 录音器
@@ -113,11 +114,17 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 		 context=this;
 //		 getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
 		 initView();
+		 //通过Activity.getIntent()获取当前页面接收到的Intent。
+		 Intent intent =getIntent();
+		  //getXxxExtra方法获取Intent传递过来的数据
+		 String eachName=intent.getStringExtra("itemTitle");
+		 itemName.setText(eachName);
 		 manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		 ThreadManager.getInstance().startGetMessageThread(context);
 	    }
 	public void initView(){
 		voiceRecordHintRecording = (LinearLayout) findViewById(R.id.voice_record_hint_recording);
+		itemName=(TextView)findViewById(R.id.name);
 		voiceRecordTextView = (TextView) findViewById(R.id.voice_recording_textView);
 		voiceRecordCancel = (LinearLayout) findViewById(R.id.voice_record_cancel);
 		volume = (ImageView) findViewById(R.id.volume);
