@@ -7,31 +7,32 @@ import com.amap.api.maps.model.LatLng;
  */
 public class Constants
 {
-    // Ó¦ÓÃµÄÃû³Æ
+
+    // åº”ç”¨çš„åç§°
     public static final String APP_NAME = "IMSDroid";
-    // ÓÃ»§Ãû
+    // ç”¨æˆ·å
     public static String USER_NAME;
-    // ·şÎñÆ÷Êı¾İÇëÇóµÄURl»ùÖ·
+    // æœåŠ¡å™¨æ•°æ®è¯·æ±‚çš„URlåŸºå€
     public  String SERVER_BASE_URL ="http://172.16.134.5:8080/";
     //public static String SERVER_BASE_URL = "http://techserver.oicp.net:9988/";
     // public static String SERVER_BASE_URL = "http://192.168.1.100:8020/";
-    public  String CONTACT_URL ="http://172.16.134.5:8080"+"/department.xml";
+    public  String CONTACT_URL ="http://172.16.134.14:8080"+"/department.xml";
     //"http://119.97.246.78:9090/plugins/unifiedcom/department";
     //public static final String CONTACT_URL ="http://192.168.1.119:9090/plugins/unifiedcom/department";
     // public static final String CONTACT_URL =
     // "http://192.168.4.204:9090/plugins/unifiedcom/department";
-    // ÇëÇó³É¹¦
+    // è¯·æ±‚æˆåŠŸ
     public static final int REQUEST_SUCCESS = 0;
-    // ÇëÇóÊ§°Ü
+    // è¯·æ±‚å¤±è´¥
     public static final int REQUEST_FAIL  = 1;
-    // ½«¾¯±¨Ğ´ÈëÊı¾İ¿âÍê³É
+    // å°†è­¦æŠ¥å†™å…¥æ•°æ®åº“å®Œæˆ
     public static final int WRITE_ALARM   = 2;
-    // ½«ÏûÏ¢Ğ´ÈëÊı¾İ¿âÍê³É
+    // å°†æ¶ˆæ¯å†™å…¥æ•°æ®åº“å®Œæˆ
     public static final int WRITE_MESSAGE = 3;
 
     public static final String FREE_CONFERENCE_NUM = "freeConferenceNum";
 
-    /*¶Ô·şÎñÆ÷½øĞĞÊı¾İÇëÇóµÄ·½·¨*/
+    /*å¯¹æœåŠ¡å™¨è¿›è¡Œæ•°æ®è¯·æ±‚çš„æ–¹æ³•*/
     public static final String GET_FREE_CONFERENCE = "conference.do";
     public static final String MAKE_CALL = "call.do";
     public static final String NEW_MESSAGE = "HttpService/NewMessage";
@@ -40,31 +41,31 @@ public class Constants
     public static final String UPLOAD_POSITION = "HttpService/UploadPosition";
     public static final String UPDATE_ONLINE_STATE = "HttpService/UpdateOnlineState";
 
-    /*Êı¾İ´æ´¢·½Ê½*/
-    public static final int DATA_STORE_CACHE = 1;// »º´æ
-    public static final int DATA_STORE_DATABASE = 2;// Êı¾İ¿â
+    /*æ•°æ®å­˜å‚¨æ–¹å¼*/
+    public static final int DATA_STORE_CACHE = 1;// ç¼“å­˜
+    public static final int DATA_STORE_DATABASE = 2;// æ•°æ®åº“
 
-    /*HTTP´«ÊäÀàĞÍ*/
+    /*HTTPä¼ è¾“ç±»å‹*/
     public static final String CONTENT_TYPE_JPEG = "image/jpeg";
     public static final String CONTENT_TYPE_MP4 = "video/mp4";
     public static final String CONTENT_TYPE_MP3 = "audio/mpeg";
 
-    /*¸½¼şÀàĞÍ*/
+    /*é™„ä»¶ç±»å‹*/
     public static final int ATTACHMENT_TYPE_AUDIO = 2;
     public static final int ATTACHMENT_TYPE_IMAGE = 3;
     public static final int ATTACHMENT_TYPE_VIDEO = 4;
 
-    // »¬¶¯ÍË³öµÄxÖá×îĞ¡ÏñËØ¼ä¾à
+    // æ»‘åŠ¨é€€å‡ºçš„xè½´æœ€å°åƒç´ é—´è·
     public static final int MIN_GAP_X = 150;
-    // »¬¶¯ÍË³öµÄyÖá×îĞ¡ÏñËØ¼ä¾à
+    // æ»‘åŠ¨é€€å‡ºçš„yè½´æœ€å°åƒç´ é—´è·
     public static final int MAX_GAP_Y = 100;
 
-    // Ïò·şÎñÆ÷ÇëÇó¾¯±¨ĞÅÏ¢µÄ¼ä¸ô£¨ºÁÃë£©
+    // å‘æœåŠ¡å™¨è¯·æ±‚è­¦æŠ¥ä¿¡æ¯çš„é—´éš”ï¼ˆæ¯«ç§’ï¼‰
     public static int GET_ALARM_GAP;
     public static final int GET_ALARM_GAP_5_MIN = 300000;
     public static final int GET_ALARM_GAP_15_MIN = 900000;
     public static final int GET_ALARM_GAP_30_MIN = 1800000;
-    // µØÍ¼ÏÔÊ¾ÖĞĞÄÎ»ÖÃ
-    public static final LatLng WUHAN = new LatLng(30.51667, 114.31667);// ÎäººÊĞ¾­Î³¶È
+    // åœ°å›¾æ˜¾ç¤ºä¸­å¿ƒä½ç½®
+    public static final LatLng WUHAN = new LatLng(30.51667, 114.31667);// æ­¦æ±‰å¸‚ç»çº¬åº¦
 
 }

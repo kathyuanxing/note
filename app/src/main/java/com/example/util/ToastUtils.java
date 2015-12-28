@@ -8,12 +8,7 @@ import android.content.Context;
 import android.view.Gravity;
 import android.widget.Toast;
 
-/**
- * Toastπ§æﬂ¿‡
- *
- * @author lh
- *
- */
+
 public class ToastUtils {
 
     public static void show(Context context, String text) {

@@ -2,25 +2,25 @@
 <items version="2" >
 
     <item
-        jar="E:\b506项目学习资料\TestAndroid\app\src\main\java\libs\armeabi.jar"
-        jumboMode="false"
-        revision="23.0.0 rc3"
-        sha1="34f52d9ea412e4c086e0aa5b0f1253c466c85d01">
-        <dex dex="E:\b506项目学习资料\TestAndroid\app\build\intermediates\pre-dexed\debug\armeabi-28cf37205dd041dae5a6697cef22e9567ef80fdc.jar" />
-    </item>
-    <item
-        jar="E:\b506项目学习资料\TestAndroid\app\src\main\java\libs\Android_Location_V1.0.5.jar"
-        jumboMode="false"
-        revision="23.0.0 rc3"
-        sha1="15f8fd9bc4afc2f1096e409abab0478f9c455918">
-        <dex dex="E:\b506项目学习资料\TestAndroid\app\build\intermediates\pre-dexed\debug\Android_Location_V1.0.5-d36c96215dd6ef2451da143866fb94313621e3a2.jar" />
-    </item>
-    <item
         jar="E:\b506项目学习资料\TestAndroid\app\src\main\java\libs\android-async-http-1.4.3.jar"
         jumboMode="false"
         revision="23.0.0 rc3"
         sha1="f70e680861fdf9449819003e7799a4e9aca047f8">
         <dex dex="E:\b506项目学习资料\TestAndroid\app\build\intermediates\pre-dexed\debug\android-async-http-1.4.3-02290c25821e7ce82115f597a4daf4db0afd10c5.jar" />
+    </item>
+    <item
+        jar="E:\b506项目学习资料\TestAndroid\app\src\main\java\libs\Android_Services_2.1.4.jar"
+        jumboMode="false"
+        revision="23.0.0 rc3"
+        sha1="1998c57e6e539db18321bae59235462642ec2912">
+        <dex dex="E:\b506项目学习资料\TestAndroid\app\build\intermediates\pre-dexed\debug\Android_Services_2.1.4-c5349f505b51a2ec0a18cea20be6a65bdcd5b381.jar" />
+    </item>
+    <item
+        jar="E:\b506项目学习资料\TestAndroid\app\src\main\java\libs\armeabi.jar"
+        jumboMode="false"
+        revision="23.0.0 rc3"
+        sha1="34f52d9ea412e4c086e0aa5b0f1253c466c85d01">
+        <dex dex="E:\b506项目学习资料\TestAndroid\app\build\intermediates\pre-dexed\debug\armeabi-28cf37205dd041dae5a6697cef22e9567ef80fdc.jar" />
     </item>
     <item
         jar="E:\b506项目学习资料\TestAndroid\app\src\main\java\libs\Android_Map_2.1.4.jar"
@@ -30,18 +30,18 @@
         <dex dex="E:\b506项目学习资料\TestAndroid\app\build\intermediates\pre-dexed\debug\Android_Map_2.1.4-a79c85ed37c89084b82922847388c0f1cc447846.jar" />
     </item>
     <item
+        jar="E:\b506项目学习资料\TestAndroid\app\src\main\java\libs\Android_Location_V1.0.5.jar"
+        jumboMode="false"
+        revision="23.0.0 rc3"
+        sha1="15f8fd9bc4afc2f1096e409abab0478f9c455918">
+        <dex dex="E:\b506项目学习资料\TestAndroid\app\build\intermediates\pre-dexed\debug\Android_Location_V1.0.5-d36c96215dd6ef2451da143866fb94313621e3a2.jar" />
+    </item>
+    <item
         jar="C:\Users\kathy\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-v4\18.0.0\support-v4-18.0.0.jar"
         jumboMode="false"
         revision="23.0.0 rc3"
         sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
         <dex dex="E:\b506项目学习资料\TestAndroid\app\build\intermediates\pre-dexed\debug\support-v4-18.0.0-ad7a5e7144e4236ff916795856bdb5ddd57cfee7.jar" />
-    </item>
-    <item
-        jar="E:\b506项目学习资料\TestAndroid\app\src\main\java\libs\Android_Services_2.1.4.jar"
-        jumboMode="false"
-        revision="23.0.0 rc3"
-        sha1="1998c57e6e539db18321bae59235462642ec2912">
-        <dex dex="E:\b506项目学习资料\TestAndroid\app\build\intermediates\pre-dexed\debug\Android_Services_2.1.4-c5349f505b51a2ec0a18cea20be6a65bdcd5b381.jar" />
     </item>
 
 </items>

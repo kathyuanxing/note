@@ -2,11 +2,17 @@
 <resources>
     <!-- From: file:/E:/b506项目学习资料/TestAndroid/app/src/main/res/values/colors.xml -->
     <eat-comment/>
+    <color name="bar_color">#232325</color>
+    <color name="black">#ff000000</color>
+    <color name="black1">#7A7E83</color>
+    <color name="black2">#ffeeeeee</color>
     <color name="btn_gray_normal">#c0c0c0</color>
     <color name="common_top_bar_blue">#22292c</color>
+    <color name="gray">#ff808080</color>
     <color name="graywhite">#F5F5F5</color>
     <color name="half_transparent">#88000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="windows_color">#F5F5F5</color>
     <declare-styleable name="Emojicon"><attr format="dimension" name="emojiconSize"/><attr format="integer" name="emojiconTextStart"/><attr format="integer" name="emojiconTextLength"/></declare-styleable>
     <!-- From: file:/E:/b506项目学习资料/TestAndroid/app/src/main/res/values/dimens.xml -->
     <eat-comment/>
@@ -30,15 +36,33 @@
     <string name="attach_voice_call">语音电话</string>
     <string name="button_pushtotalk">按住说话</string>
     <string name="button_send">发送</string>
+    <string name="card_bag">卡包</string>
     <string name="change_city">Change city</string>
+    <string name="chat">笔记</string>
+    <string name="collection">收藏</string>
+    <string name="contacts">通讯录</string>
     <string name="custom_title_left">聊天笔记</string>
+    <string name="discover">发现</string>
+    <string name="drift_bottle">漂流瓶</string>
+    <string name="expression2">表情</string>
+    <string name="games">游戏</string>
     <string name="hello_world">Hello world!</string>
+    <string name="me">我</string>
+    <string name="moments">朋友圈</string>
     <string name="move_up_to_cancel">手指上滑，取消发送</string>
+    <string name="my_posts">相册</string>
+    <string name="no_msg">暂时没有新消息</string>
     <string name="open_weather_maps_app_id">11111</string>
+    <string name="people_nearby">附近的人</string>
     <string name="place_not_found">Sorry, no weather data found.</string>
     <string name="release_to_cancel">松开手指，取消发送</string>
+    <string name="scan">扫一扫</string>
+    <string name="settings">设置</string>
+    <string name="shake2">摇一摇</string>
+    <string name="shopping">购物</string>
     <string name="text_ack_msg">已读</string>
     <string name="text_delivered_msg">送达</string>
+    <string name="wallet">钱包</string>
     <string name="weather_clear_night"></string>
     <string name="weather_cloudy"></string>
     <string name="weather_drizzle"></string>
@@ -47,6 +71,7 @@
     <string name="weather_snowy"></string>
     <string name="weather_sunny"></string>
     <string name="weather_thunder"></string>
+    <string name="wechat_id">微信号</string>
     <!-- From: file:/E:/b506项目学习资料/TestAndroid/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppBaseTheme" parent="android:Theme.Light">
@@ -58,6 +83,13 @@
     </style>
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    <style name="TxtTitle" parent="@style/img_Style">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:paddingLeft">6.0dip</item>
+        <item name="android:paddingRight">6.0dip</item>
+        <item name="android:focusable">false</item>
     </style>
     <style name="chat_content_date_style">
         <item name="android:minHeight">50dp</item>
@@ -83,5 +115,21 @@
         <item name="android:textColor">#818181</item>
         <item name="android:textSize">15sp</item>
         <item name="android:gravity">center</item>
+    </style>
+    <style name="img_Style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:contentDescription">@string/app_name</item>
+    </style>
+    <style name="txt_ContextStyle1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="txt_titleStyle1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>
