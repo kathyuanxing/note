@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
             if(sp.getBoolean("AUTO_ISCHECK", false)){
                 //设置CheckBox自动登陆状态
                 auto_login.setChecked(true);
-                Intent intent=new Intent(MainActivity.this,RegisterSuccessActivity.class);
+                Intent intent=new Intent(MainActivity.this,MenuActivity.class);
                 startActivity(intent);
             }
         }
@@ -133,7 +133,7 @@ public class MainActivity extends Activity {
                     Context context=MainActivity.this;
                     MSharedPreference.save(context,MSharedPreference.USER_ID, Mun);
                     MSharedPreference.save(context, MSharedPreference.USER_NAME, Mun);
-                    Intent nextIntent = new Intent(MainActivity.this, RegisterSuccessActivity.class);
+                    Intent nextIntent = new Intent(MainActivity.this, MenuActivity.class);
                     startActivity(nextIntent);
                     // 结束该Activity
                     finish();

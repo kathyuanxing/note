@@ -18,6 +18,7 @@ import com.example.fragment.MyFragment2;
 import com.example.fragment.MyFragment3;
 import com.example.fragment.MyFragment4;
 import com.example.thread.ReadContactThread;
+import com.example.thread.ThreadManager;
 
 /**
  * Created by kathy on 2015/12/25.
@@ -50,6 +51,7 @@ public class MenuActivity  extends FragmentActivity   {
         // 开启联系人加载线程
         MenuActivity.contactUpdating=true;
         new ReadContactThread(context).start();
+        ThreadManager.getInstance().startGetMessageThread(context);
     }
 
     public void initView() {

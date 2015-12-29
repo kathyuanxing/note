@@ -16,12 +16,9 @@ import android.widget.Toast;
 
 import com.example.adapter.ContactAdapter;
 import com.example.dao.ContactDao;
-import com.example.entity.ChatMsgEntity;
 import com.example.entity.Contact;
 import com.example.entity.ContactRow;
-import com.example.testandroid.LocationActivity;
 import com.example.testandroid.RegisterSuccessActivity;
-import com.example.util.Constants;
 
 import com.example.testandroid.R;
 import com.example.widget.SideBar;
@@ -65,11 +62,13 @@ public class MyFragment2 extends ListFragment implements OnItemClickListener {
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Log.d("testClick","test");
-		String itemTitle;
-		ContactRow mycontactRow =contactRowList.get(position);
-		itemTitle=mycontactRow.getTitle();
+		String itemTitle,itemID;
+		Contact mycontact =contactArrayList.get(position);
+		itemTitle=mycontact.getContact_name();
+		itemID=mycontact.getContact_userid();
 		Intent intent=new Intent(ctx, RegisterSuccessActivity.class);
 		intent.putExtra("itemTitle",itemTitle);
+		intent.putExtra("itemID",itemID);
 		startActivity(intent);
 	}
 	private void initViews() {
@@ -90,7 +89,7 @@ public class MyFragment2 extends ListFragment implements OnItemClickListener {
 			eachEntity.setTitle(j.getContact_name());
 			eachEntity.setIcon(R.drawable.head);
 			contactRowList.add(eachEntity);
-//			Log.d("eachEntity",eachEntity.toString());
+			Log.d("eachEntity",eachEntity.toString());
 		}
 		Log.d("contactRowList",contactRowList.toString());
 	}

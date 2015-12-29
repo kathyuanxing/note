@@ -65,7 +65,7 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 	private String audioUri; // 音频文件路径
 	private LinearLayout attachmentRelativeLayout;// 添加附件的布局
 	private Long startVoiceRecordTime, endVoiceRecordTime; // 录音开始时间、结束时间
-	private String talkerName="aaron", talkerID="aaron";
+	private String eachName, eachID;
 	private Button mBtnSend;
 	private EditText mEditTextContent;
 	private ViewPager expressionViewpager;
@@ -113,14 +113,14 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 		 setContentView(R.layout.activity_chat);
 		 context=this;
 //		 getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title);
-		 initView();
 		 //通过Activity.getIntent()获取当前页面接收到的Intent。
 		 Intent intent =getIntent();
-		  //getXxxExtra方法获取Intent传递过来的数据
-		 String eachName=intent.getStringExtra("itemTitle");
+		 //getXxxExtra方法获取Intent传递过来的数据
+		 eachName=intent.getStringExtra("itemTitle");
+		 eachID=intent.getStringExtra("itemID");
+		 initView();
 		 itemName.setText(eachName);
 		 manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		 ThreadManager.getInstance().startGetMessageThread(context);
 	    }
 	public void initView(){
 		voiceRecordHintRecording = (LinearLayout) findViewById(R.id.voice_record_hint_recording);
@@ -187,7 +187,7 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 	public void initData(){
 		String userID = MSharedPreference.get(this, MSharedPreference.USER_ID, "");
 		ArrayList<MMessage> messageList = MDataOperation.readReverseMessages(
-				currentCount, Constants.DATA_STORE_DATABASE, userID, talkerID,
+				currentCount, Constants.DATA_STORE_DATABASE, userID, eachID,
 				this);
 		for (MMessage j : messageList) {
 			//遍历MMessage
@@ -599,7 +599,6 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 //		String userName="kathy";
 		String userID = MSharedPreference.get(this, MSharedPreference.USER_ID, "");
 		String userName = MSharedPreference.get(this, MSharedPreference.USER_NAME, "");
-		// int talkerID = Integer.parseInt(this.talkerID);
 		String time = MMicroUtil.getCurrentTimeStamp();
 		String id = MMicroUtil.getCurrentTimeMillis();
 		String sendPosition = "";
@@ -617,13 +616,13 @@ public class RegisterSuccessActivity extends Activity implements OnClickListener
 				|| messageType == MDatabaseConstants.MESSAGE_TYPE_TRACK
 				|| messageType == MDatabaseConstants.MESSAGE_TYPE_QRCODE) {
 			// 添加文本消息
-			message = new MMessage(id, userID, userName, talkerID, talkerName,
+			message = new MMessage(id, userID, userName, eachID, eachName,
 					text, null, 0L, 0, messageType, time, sendPosition);
 			Log.d("message",message.toString());
 		} else {
 			Long fileSize = MFileUtil.getFileSize(text);
 			// 添加文件消息
-			message = new MMessage(id, userID, userName, talkerID, talkerName,
+			message = new MMessage(id, userID, userName, eachID, eachName,
 					null, text, fileSize, fileDuration, messageType, time,
 					sendPosition);
 		}
