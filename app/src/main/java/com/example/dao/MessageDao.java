@@ -18,6 +18,9 @@ public class MessageDao {
     public MessageDao(Context context) {
         dbHelper = MDatabaseHelper.getInstance(context);
     }
+    public MessageDao(){
+
+    }
 
     /**
      * 将消息条目保存如数据库
@@ -40,7 +43,28 @@ public class MessageDao {
             return true;
         }
     }
-
+/**
+ *获取不同ID最新消息
+ *
+ */
+    public ArrayList<MMessage> getRecentMessage(){
+        ArrayList<MMessage> messages = new ArrayList<MMessage>();
+        Cursor cursor=null;
+        try{
+            SQLiteDatabase db=dbHelper.getReadableDatabase();
+            cursor=db.query(MDatabaseConstants.TABLE_MESSAGE,
+                    MDatabaseConstants.MESSAGE_ALL_COLUMNS,
+                    null,null,"receiver_name", null,"receiver_name",null);
+            while (cursor.moveToNext()){
+                messages.add(createFromCursor(cursor));
+            }
+        }finally {
+            if(cursor==null){
+                cursor.close();
+            }
+        }
+        return messages;
+    }
     /**
      * 从指定位置开始读取指定数目的数据
      *

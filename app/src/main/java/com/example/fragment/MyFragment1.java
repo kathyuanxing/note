@@ -6,12 +6,18 @@ import android.os.Bundle;
 import android.widget.AdapterView.OnItemClickListener;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
+import com.example.dao.MessageDao;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.example.entity.MMessage;
 import com.example.testandroid.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MyFragment1 extends ListFragment implements OnItemClickListener {
 	private ListView listView;
@@ -42,7 +48,9 @@ public class MyFragment1 extends ListFragment implements OnItemClickListener {
 		ctx = this.getActivity();
 	}
 	public void initData(){
-
+		MessageDao messageDao=new MessageDao(ctx);
+		List<MMessage> messages=new ArrayList<MMessage>() ;
+		messages=messageDao.getRecentMessage();
 	}
 
 }

@@ -99,7 +99,7 @@ public class MDataOperation {
     }
 
     /**
-     * 从指定条目数起读取本地警报
+     * 从指定条目数起读取本地消息
      *
      * @param start
      *            读数据起始位置
@@ -123,10 +123,10 @@ public class MDataOperation {
     // }
 
     /**
-     * 将服务器返回的警报列表存入本地
+     * 将服务器返回的消息列表存入本地
      *
      * @param alarmBasicList
-     *            服务器返回的警报列表
+     *            服务器返回的消息列表
      * @param dataStore
      *            数据存储方式
      * @param context
