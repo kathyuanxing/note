@@ -47,7 +47,7 @@ public class HistoryAdapter  extends BaseAdapter {
             viewHolder=new ViewHolder();
             viewHolder.userName=(TextView)convertView.findViewById(R.id.name_friend);
             viewHolder.time=(TextView)convertView.findViewById(R.id.time_friend);
-            viewHolder.unRead=(TextView)convertView.findViewById(R.id.unread_msg_number);
+//            viewHolder.unRead=(TextView)convertView.findViewById(R.id.unread_msg_number);
             viewHolder.userMessage=(TextView)convertView.findViewById(R.id.message);
             viewHolder.userHead=(ImageView)convertView.findViewById(R.id.avatar_friend);
             convertView.setTag(viewHolder);
@@ -56,12 +56,12 @@ public class HistoryAdapter  extends BaseAdapter {
         }
         name=entity.getChatName();
         time=entity.getChatTime();
-        read=entity.getChatState();
+//        read=entity.getChatState();
         message=entity.getChatMessage();
         head=entity.getChatHead();
         viewHolder.userName.setText(name);
         viewHolder.time.setText(time);
-        viewHolder.unRead.setText(read);
+//        viewHolder.unRead.setText(read);
         viewHolder.userMessage.setText(message);
         viewHolder.userHead.setImageResource(head);
         return convertView;
@@ -72,7 +72,7 @@ public class HistoryAdapter  extends BaseAdapter {
         public TextView userName;
         public ImageView userHead;
         public TextView userMessage;
-        public TextView unRead;
+//        public TextView unRead;
         public TextView time;
 
     }
